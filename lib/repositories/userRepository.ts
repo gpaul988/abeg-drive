@@ -17,6 +17,11 @@ export async function findUserById(id: string): Promise<BaseUser | undefined> {
   return db.data.users.find((u) => u.id === id);
 }
 
+export async function listUsersByRole(role: UserRole): Promise<BaseUser[]> {
+  const db = await getDb();
+  return db.data.users.filter((u) => u.role === role);
+}
+
 export async function createUser(input: {
   phone: string;
   email: string;

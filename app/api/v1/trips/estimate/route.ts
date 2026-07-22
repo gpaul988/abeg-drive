@@ -23,6 +23,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "validation_error", details: parsed.error.flatten() }, { status: 400 });
   }
 
-  const breakdown = estimateFare(parsed.data.pickup, parsed.data.destinations);
+  const breakdown = await estimateFare(parsed.data.pickup, parsed.data.destinations);
   return NextResponse.json({ fareBreakdown: breakdown });
 }

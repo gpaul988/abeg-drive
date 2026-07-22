@@ -33,6 +33,11 @@ export interface BaseUser {
   otpVerifiedAt?: string;
   identityVerifiedAt?: string;
   paymentMethodAddedAt?: string;
+
+  // 2FA (TOTP) — mandatory for platform_admin/security_agent/super_admin
+  // roles per spec section 3.7 and 5. Not applicable to customer/driver.
+  totpSecret?: string;
+  totpEnabledAt?: string;
 }
 
 export interface CustomerProfile {

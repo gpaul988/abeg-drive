@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   }
   const { pickup, destinations, vehicle, scheduledTime } = parsed.data;
 
-  const breakdown = estimateFare(
+  const breakdown = await estimateFare(
     pickup.point,
     destinations.map((d) => d.point)
   );

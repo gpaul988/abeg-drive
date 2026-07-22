@@ -37,6 +37,17 @@ interface DbSchema {
   corporateAccounts: CorporateAccount[];
   venuePartners: VenuePartner[];
   auditLog: AuditLogEntry[];
+  pricingConfig: PricingConfig;
+}
+
+export interface PricingConfig {
+  baseFare: number;
+  perKmRate: number;
+  escortSurcharge: number;
+  surgeEnabled: boolean;
+  surgeMultiplier: number;
+  corporateDiscountPct: number;
+  updatedAt: string;
 }
 
 export interface AuditLogEntry {
@@ -62,6 +73,15 @@ const defaultData: DbSchema = {
   corporateAccounts: [],
   venuePartners: [],
   auditLog: [],
+  pricingConfig: {
+    baseFare: 1500,
+    perKmRate: 250,
+    escortSurcharge: 1000,
+    surgeEnabled: false,
+    surgeMultiplier: 1.5,
+    corporateDiscountPct: 0,
+    updatedAt: new Date(0).toISOString(),
+  },
 };
 
 const file = path.join(process.cwd(), "data", "db.json");
@@ -73,6 +93,7 @@ async function ensureInit() {
   if (initialized) return;
   await db.read();
   db.data ||= defaultData;
+  db.data.pricingConfig ||= defaultData.pricingConfig;
   initialized = true;
 }
 

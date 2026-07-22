@@ -18,6 +18,7 @@ export const verifyOtpSchema = z.object({
 export const loginSchema = z.object({
   identifier: z.string().min(3), // phone or email
   password: z.string().min(1),
+  totpCode: z.string().length(6).optional(),
 });
 
 export const ninVerifySchema = z.object({

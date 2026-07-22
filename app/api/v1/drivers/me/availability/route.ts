@@ -19,6 +19,9 @@ export async function PUT(req: Request) {
   if (profile.applicationStatus !== "approved") {
     return NextResponse.json({ error: "application_not_approved" }, { status: 409 });
   }
+  if (profile.probationStatus === "suspended") {
+    return NextResponse.json({ error: "driver_suspended" }, { status: 403 });
+  }
 
   const body = await req.json().catch(() => null);
   const parsed = availabilitySchema.safeParse(body);

@@ -1,37 +1,43 @@
 import { GeoPoint } from "./types";
 import { distanceKm } from "./geo";
-
-// Placeholder fare model until a real distance/duration matrix (Google
-// Directions API) and finalized pricing policy are wired up. Structure keeps
-// the two-driver dispatch cost and bond fund contribution visible in the
-// estimate breakdown, per spec sections 1 and 6.
-const BASE_FARE = 1500; // NGN
-const PER_KM_RATE = 250; // NGN
-const ESCORT_SURCHARGE = 1000; // NGN — covers the second driver's return trip
+import { getPricingConfig } from "./repositories/pricingRepository";
 
 export interface FareBreakdown {
   baseFare: number;
   distanceKm: number;
   distanceFare: number;
   escortSurcharge: number;
+  surgeApplied: boolean;
+  subtotal: number;
   total: number;
 }
 
-export function estimateFare(pickup: GeoPoint, stops: GeoPoint[]): FareBreakdown {
+// Fare model reads live rates from admin/pricing (lib/repositories/pricingRepository.ts)
+// rather than hardcoded constants, so Platform Admin's fare-rule changes take
+// effect immediately without a deploy. Distance is a straight-line Haversine
+// estimate until a real distance/duration matrix (Google Directions API) is
+// wired up in production — real road distance in Port Harcourt traffic will
+// run higher than this estimate.
+export async function estimateFare(pickup: GeoPoint, stops: GeoPoint[]): Promise<FareBreakdown> {
+  const config = await getPricingConfig();
+
   let totalDistance = 0;
   let prev = pickup;
   for (const stop of stops) {
     totalDistance += distanceKm(prev, stop);
     prev = stop;
   }
-  const distanceFare = Math.round(totalDistance * PER_KM_RATE);
-  const total = BASE_FARE + distanceFare + ESCORT_SURCHARGE;
+  const distanceFare = Math.round(totalDistance * config.perKmRate);
+  const subtotal = config.baseFare + distanceFare + config.escortSurcharge;
+  const total = config.surgeEnabled ? Math.round(subtotal * config.surgeMultiplier) : subtotal;
 
   return {
-    baseFare: BASE_FARE,
+    baseFare: config.baseFare,
     distanceKm: Math.round(totalDistance * 10) / 10,
     distanceFare,
-    escortSurcharge: ESCORT_SURCHARGE,
+    escortSurcharge: config.escortSurcharge,
+    surgeApplied: config.surgeEnabled,
+    subtotal,
     total,
   };
 }
