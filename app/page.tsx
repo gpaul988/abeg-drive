@@ -9,7 +9,7 @@ export default function LandingPage() {
             <div className="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-white text-sm font-bold">
               S
             </div>
-            <span className="font-semibold text-neutral-900">SafeKeys</span>
+            <span className="font-semibold text-neutral-900">AbegDrive</span>
           </div>
           <nav className="flex items-center gap-6 text-sm text-neutral-600">
             <Link href="/how-it-works" className="hover:text-neutral-900">How it works</Link>

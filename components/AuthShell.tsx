@@ -19,7 +19,7 @@ export function AuthShell({
             <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white font-bold">
               S
             </div>
-            <span className="font-semibold text-lg text-neutral-900">SafeKeys</span>
+            <span className="font-semibold text-lg text-neutral-900">AbegDrive</span>
           </div>
           {step && totalSteps && (
             <div className="flex items-center gap-1.5 justify-center mb-6">

@@ -23,6 +23,19 @@ export async function apiGet<T>(path: string, token?: string): Promise<{ status:
   return { status: res.status, data };
 }
 
+export async function apiPut<T>(path: string, body: unknown, token?: string): Promise<{ status: number; data: T }> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { status: res.status, data };
+}
+
 const SESSION_KEY = "safekeys_session";
 
 export interface Session {

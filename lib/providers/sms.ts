@@ -24,7 +24,7 @@ export async function sendOtpSms(phone: string, code: string): Promise<void> {
   //     api_key: apiKey,
   //     message_type: "NUMERIC",
   //     to: phone,
-  //     from: "SafeKeys",
+  //     from: "AbegDrive",
   //     channel: "generic",
   //     pin_attempts: 3,
   //     pin_time_to_live: 5,

@@ -65,7 +65,7 @@ export default function LoginPage() {
           Log in
         </PrimaryButton>
         <p className="text-xs text-neutral-500 text-center mt-4">
-          New to SafeKeys?{" "}
+          New to AbegDrive?{" "}
           <a href="/signup" className="text-amber-600 font-medium">
             Create an account
           </a>

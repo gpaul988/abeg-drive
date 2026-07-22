@@ -75,6 +75,30 @@ export async function updateCustomerProfile(
   return profile;
 }
 
+export async function addVehicleToProfile(
+  userId: string,
+  vehicle: CustomerProfile["savedVehicles"][number]
+): Promise<CustomerProfile | undefined> {
+  const db = await getDb();
+  const profile = db.data.customerProfiles.find((p) => p.userId === userId);
+  if (!profile) return undefined;
+  profile.savedVehicles.push(vehicle);
+  await db.write();
+  return profile;
+}
+
+export async function addEmergencyContactToProfile(
+  userId: string,
+  contact: CustomerProfile["emergencyContacts"][number]
+): Promise<CustomerProfile | undefined> {
+  const db = await getDb();
+  const profile = db.data.customerProfiles.find((p) => p.userId === userId);
+  if (!profile) return undefined;
+  profile.emergencyContacts.push(contact);
+  await db.write();
+  return profile;
+}
+
 // --- OTP ---
 
 export async function createOtp(phone: string, code: string, ttlMs: number): Promise<OtpRecord> {

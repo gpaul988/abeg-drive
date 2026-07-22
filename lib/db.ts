@@ -12,13 +12,42 @@
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 import path from "path";
-import { BaseUser, CustomerProfile, OtpRecord, RefreshTokenRecord } from "./types";
+import {
+  BaseUser,
+  CustomerProfile,
+  OtpRecord,
+  RefreshTokenRecord,
+  DriverProfile,
+  Trip,
+  Incident,
+  BondFundLedgerEntry,
+  CorporateAccount,
+  VenuePartner,
+} from "./types";
 
 interface DbSchema {
   users: BaseUser[];
   customerProfiles: CustomerProfile[];
   otps: OtpRecord[];
   refreshTokens: RefreshTokenRecord[];
+  driverProfiles: DriverProfile[];
+  trips: Trip[];
+  incidents: Incident[];
+  bondFundLedger: BondFundLedgerEntry[];
+  corporateAccounts: CorporateAccount[];
+  venuePartners: VenuePartner[];
+  auditLog: AuditLogEntry[];
+}
+
+export interface AuditLogEntry {
+  id: string;
+  actorUserId: string;
+  actorRole: string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  details?: string;
+  createdAt: string;
 }
 
 const defaultData: DbSchema = {
@@ -26,6 +55,13 @@ const defaultData: DbSchema = {
   customerProfiles: [],
   otps: [],
   refreshTokens: [],
+  driverProfiles: [],
+  trips: [],
+  incidents: [],
+  bondFundLedger: [],
+  corporateAccounts: [],
+  venuePartners: [],
+  auditLog: [],
 };
 
 const file = path.join(process.cwd(), "data", "db.json");
