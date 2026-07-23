@@ -36,38 +36,38 @@ export default function CorporateReportsPage() {
 
   return (
     <AppShell navLinks={corporateNavLinks} activeHref="/corporate/reports" roleLabel="Corporate Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Safety & usage report</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Safety & usage report</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Share this with your organization&apos;s safety policy compliance team.
       </p>
 
-      {!report && <p className="text-sm text-neutral-400">Loading…</p>}
+      {!report && <p className="text-sm text-paper-faint">Loading…</p>}
 
       {report && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Employees using AbegDrive</p>
-            <p className="text-2xl font-semibold text-neutral-900">{report.totalEmployees}</p>
+            <p className="text-sm text-paper-dim mb-1">Employees using AbegDrive</p>
+            <p className="text-2xl font-semibold text-paper">{report.totalEmployees}</p>
           </Card>
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Total trips</p>
-            <p className="text-2xl font-semibold text-neutral-900">{report.totalTrips}</p>
+            <p className="text-sm text-paper-dim mb-1">Total trips</p>
+            <p className="text-2xl font-semibold text-paper">{report.totalTrips}</p>
           </Card>
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Completed trips</p>
-            <p className="text-2xl font-semibold text-neutral-900">{report.completedTrips}</p>
+            <p className="text-sm text-paper-dim mb-1">Completed trips</p>
+            <p className="text-2xl font-semibold text-paper">{report.completedTrips}</p>
           </Card>
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Cancelled trips</p>
-            <p className="text-2xl font-semibold text-neutral-900">{report.cancelledTrips}</p>
+            <p className="text-sm text-paper-dim mb-1">Cancelled trips</p>
+            <p className="text-2xl font-semibold text-paper">{report.cancelledTrips}</p>
           </Card>
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Incidents involving employees</p>
-            <p className="text-2xl font-semibold text-neutral-900">{report.incidentsInvolvingEmployees}</p>
+            <p className="text-sm text-paper-dim mb-1">Incidents involving employees</p>
+            <p className="text-2xl font-semibold text-paper">{report.incidentsInvolvingEmployees}</p>
           </Card>
           <Card>
-            <p className="text-sm text-neutral-500 mb-1">Average fare</p>
-            <p className="text-2xl font-semibold text-neutral-900">₦{report.averageFare.toLocaleString()}</p>
+            <p className="text-sm text-paper-dim mb-1">Average fare</p>
+            <p className="text-2xl font-semibold text-paper">₦{report.averageFare.toLocaleString()}</p>
           </Card>
         </div>
       )}

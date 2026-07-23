@@ -113,7 +113,7 @@ export default function DriverTripPage() {
   if (!trip) {
     return (
       <AppShell navLinks={driverNavLinks} activeHref="/driver/dashboard" roleLabel="Driver">
-        <p className="text-neutral-400 text-sm">Loading…</p>
+        <p className="text-paper-faint text-sm">Loading…</p>
       </AppShell>
     );
   }
@@ -122,7 +122,7 @@ export default function DriverTripPage() {
     <AppShell navLinks={driverNavLinks} activeHref="/driver/dashboard" roleLabel="Driver">
       <div className="max-w-xl mx-auto">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-semibold text-neutral-900">Trip details</h1>
+          <h1 className="text-xl font-semibold text-paper">Trip details</h1>
           <Badge tone="info">{trip.status.replace("_", " ")}</Badge>
         </div>
 
@@ -132,24 +132,24 @@ export default function DriverTripPage() {
         <Card className="mb-4">
           <div className="space-y-2 text-sm mb-4">
             <div className="flex gap-2">
-              <span className="w-2 h-2 mt-1.5 rounded-full bg-neutral-900 shrink-0" />
-              <span className="text-neutral-700">{trip.pickup.address}</span>
+              <span className="w-2 h-2 mt-1.5 rounded-full bg-paper shrink-0" />
+              <span className="text-paper-dim">{trip.pickup.address}</span>
             </div>
             {trip.destinations.map((d, i) => (
               <div key={i} className="flex gap-2">
-                <span className="w-2 h-2 mt-1.5 rounded-full bg-amber-500 shrink-0" />
-                <span className="text-neutral-700">{d.address}</span>
+                <span className="w-2 h-2 mt-1.5 rounded-full bg-amber shrink-0" />
+                <span className="text-paper-dim">{d.address}</span>
               </div>
             ))}
           </div>
-          <div className="border-t border-neutral-200 pt-4 text-sm">
-            <p className="text-neutral-500">Customer&apos;s vehicle</p>
-            <p className="text-neutral-900">
+          <div className="border-t border-ink-border pt-4 text-sm">
+            <p className="text-paper-dim">Customer&apos;s vehicle</p>
+            <p className="text-paper">
               {trip.vehicleSnapshot.make} {trip.vehicleSnapshot.model} — {trip.vehicleSnapshot.plateNumber} (
               {trip.vehicleSnapshot.transmissionType})
             </p>
-            <p className="text-neutral-500 mt-2">Fare</p>
-            <p className="text-neutral-900 font-medium">₦{trip.fareEstimate.toLocaleString()}</p>
+            <p className="text-paper-dim mt-2">Fare</p>
+            <p className="text-paper font-medium">₦{trip.fareEstimate.toLocaleString()}</p>
           </div>
         </Card>
 
@@ -181,7 +181,7 @@ export default function DriverTripPage() {
           )}
 
           {trip.status === "en_route" && !isPrimary && (
-            <p className="text-sm text-neutral-500 text-center">
+            <p className="text-sm text-paper-dim text-center">
               You&apos;re the escort driver on this trip — follow the primary driver to the destination.
             </p>
           )}

@@ -104,7 +104,7 @@ export default function PartnerDashboardPage() {
   if (!venue) {
     return (
       <AppShell navLinks={partnerNavLinks} activeHref="/partner/dashboard" roleLabel="Venue Partner">
-        <p className="text-neutral-400 text-sm">Loading…</p>
+        <p className="text-paper-faint text-sm">Loading…</p>
       </AppShell>
     );
   }
@@ -113,7 +113,7 @@ export default function PartnerDashboardPage() {
     <AppShell navLinks={partnerNavLinks} activeHref="/partner/dashboard" roleLabel="Venue Partner">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl font-semibold text-neutral-900">{venue.venueName}</h1>
+          <h1 className="text-xl font-semibold text-paper">{venue.venueName}</h1>
           <Badge tone={venue.whitelisted ? "success" : "warning"}>
             {venue.whitelisted ? "Whitelisted" : "Pending approval"}
           </Badge>
@@ -126,7 +126,7 @@ export default function PartnerDashboardPage() {
 
       {!venue.whitelisted && (
         <Card className="mb-6">
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-paper-dim">
             Your venue is under review. Once whitelisted by our ops team, you&apos;ll be able to request drivers on
             behalf of your guests — part of our Phase 1 safety-first launch strategy.
           </p>
@@ -135,7 +135,7 @@ export default function PartnerDashboardPage() {
 
       {showForm && (
         <Card className="mb-6">
-          <h2 className="font-medium text-neutral-900 mb-4">Request a driver for a guest</h2>
+          <h2 className="font-medium text-paper mb-4">Request a driver for a guest</h2>
           <form onSubmit={onRequestDriver}>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Guest name">
@@ -177,19 +177,19 @@ export default function PartnerDashboardPage() {
         </Card>
       )}
 
-      <h2 className="font-medium text-neutral-900 mb-3">Requests</h2>
+      <h2 className="font-medium text-paper mb-3">Requests</h2>
       <div className="space-y-3">
         {trips.map((t) => (
           <Card key={t.id}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-neutral-900">{t.guestName}</span>
+              <span className="text-sm font-medium text-paper">{t.guestName}</span>
               <Badge tone={STATUS_TONE[t.status] ?? "neutral"}>{t.status.replace("_", " ")}</Badge>
             </div>
-            <p className="text-sm text-neutral-500 truncate">{t.pickup.address}</p>
-            <p className="text-sm text-neutral-500 truncate">→ {t.destinations[0]?.address}</p>
+            <p className="text-sm text-paper-dim truncate">{t.pickup.address}</p>
+            <p className="text-sm text-paper-dim truncate">→ {t.destinations[0]?.address}</p>
           </Card>
         ))}
-        {trips.length === 0 && <p className="text-sm text-neutral-400">No requests yet.</p>}
+        {trips.length === 0 && <p className="text-sm text-paper-faint">No requests yet.</p>}
       </div>
     </AppShell>
   );

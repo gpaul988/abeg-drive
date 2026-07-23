@@ -44,8 +44,8 @@ export default function DriverTrainingPage() {
 
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/training" roleLabel="Driver">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Training</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Training</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Complete every module before your first trip. Full video-based training is planned for a future release —
         this checklist is the MVP standard.
       </p>
@@ -58,11 +58,11 @@ export default function DriverTrainingPage() {
           return (
             <Card key={m.id} className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-neutral-900">{m.title}</p>
-                <p className="text-sm text-neutral-500">{m.description}</p>
+                <p className="font-medium text-paper">{m.title}</p>
+                <p className="text-sm text-paper-dim">{m.description}</p>
               </div>
               {done ? (
-                <span className="text-green-600 text-sm font-medium">✓ Complete</span>
+                <span className="text-success text-sm font-medium">✓ Complete</span>
               ) : (
                 <Button onClick={() => markComplete(m.id)}>Mark complete</Button>
               )}

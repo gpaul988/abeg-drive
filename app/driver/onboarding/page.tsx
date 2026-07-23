@@ -161,8 +161,8 @@ export default function DriverOnboardingPage() {
       {stage === "selfie" && (
         <div>
           <ErrorBanner message={error} />
-          <div className="aspect-square bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-4">
-            <span className="text-neutral-400 text-sm">Camera preview</span>
+          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
+            <span className="text-paper-faint text-sm">Camera preview</span>
           </div>
           <PrimaryButton type="button" loading={loading} onClick={onCaptureSelfie}>
             Capture selfie
@@ -173,7 +173,7 @@ export default function DriverOnboardingPage() {
       {stage === "competency" && (
         <form onSubmit={onSubmitCompetency}>
           <ErrorBanner message={error} />
-          <p className="text-sm text-neutral-600 mb-3">Which vehicles are you competent to drive?</p>
+          <p className="text-sm text-paper-dim mb-3">Which vehicles are you competent to drive?</p>
           <div className="grid grid-cols-2 gap-2 mb-6">
             {["manual", "automatic", "suv", "sedan", "motorcycle"].map((c) => (
               <button
@@ -182,8 +182,8 @@ export default function DriverOnboardingPage() {
                 onClick={() => toggleCompetency(c)}
                 className={`border rounded-lg py-2.5 text-sm font-medium capitalize ${
                   competencies.includes(c)
-                    ? "border-amber-500 bg-amber-50 text-amber-700"
-                    : "border-neutral-300 text-neutral-600"
+                    ? "border-amber bg-amber/10 text-amber-strong"
+                    : "border-ink-border-strong text-paper-dim"
                 }`}
               >
                 {c}
@@ -219,10 +219,10 @@ export default function DriverOnboardingPage() {
               required
               value={licenseExpiry}
               onChange={(e) => setLicenseExpiry(e.target.value)}
-              className="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full border border-ink-border-strong rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber/50"
             />
           </Field>
-          <p className="text-xs text-neutral-500 mt-4 mb-2">
+          <p className="text-xs text-paper-dim mt-4 mb-2">
             Guarantor details — a community trust reference we may contact
           </p>
           <TextField label="Guarantor full name" required value={guarantorName} onChange={(e) => setGuarantorName(e.target.value)} />
@@ -238,7 +238,7 @@ export default function DriverOnboardingPage() {
             value={guarantorRelationship}
             onChange={(e) => setGuarantorRelationship(e.target.value)}
           />
-          <label className="flex items-start gap-2 mt-4 mb-4 text-sm text-neutral-600">
+          <label className="flex items-start gap-2 mt-4 mb-4 text-sm text-paper-dim">
             <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5" />
             <span>
               I consent to a background check and understand a member of our team may schedule a physical address
@@ -253,8 +253,8 @@ export default function DriverOnboardingPage() {
 
       {stage === "done" && (
         <div className="text-center py-4">
-          <p className="text-neutral-700 mb-2 font-medium">Application submitted!</p>
-          <p className="text-sm text-neutral-500 mb-6">
+          <p className="text-paper-dim mb-2 font-medium">Application submitted!</p>
+          <p className="text-sm text-paper-dim mb-6">
             Our team reviews license, guarantor, and background check details manually before approval — this
             usually takes 2–3 business days. We&apos;ll notify you by SMS.
           </p>

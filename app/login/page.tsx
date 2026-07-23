@@ -57,16 +57,16 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <div className="text-right mb-4 -mt-2">
-          <a href="/forgot-password" className="text-xs text-amber-600 font-medium">
+          <a href="/forgot-password" className="text-xs text-amber-strong font-medium">
             Forgot password?
           </a>
         </div>
         <PrimaryButton type="submit" loading={loading}>
           Log in
         </PrimaryButton>
-        <p className="text-xs text-neutral-500 text-center mt-4">
+        <p className="text-xs text-paper-dim text-center mt-4">
           New to AbegDrive?{" "}
-          <a href="/signup" className="text-amber-600 font-medium">
+          <a href="/signup" className="text-amber-strong font-medium">
             Create an account
           </a>
         </p>

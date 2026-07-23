@@ -75,7 +75,7 @@ export default function AdminTripsPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/trips" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Trip log</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Trip log</h1>
 
       <ErrorBanner message={error} />
       <SuccessBanner message={success} />
@@ -84,23 +84,23 @@ export default function AdminTripsPage() {
         {trips?.map((t) => (
           <Card key={t.id}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-neutral-400">
+              <span className="text-xs text-paper-faint">
                 {new Date(t.createdAt).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
               </span>
               <Badge tone={STATUS_TONE[t.status] ?? "neutral"}>{t.status.replace("_", " ")}</Badge>
             </div>
-            <p className="text-sm text-neutral-900 truncate">{t.pickup.address}</p>
-            <p className="text-sm text-neutral-500 truncate mb-2">→ {t.destinations[0]?.address}</p>
-            <p className="text-sm font-medium text-neutral-900 mb-2">
+            <p className="text-sm text-paper truncate">{t.pickup.address}</p>
+            <p className="text-sm text-paper-dim truncate mb-2">→ {t.destinations[0]?.address}</p>
+            <p className="text-sm font-medium text-paper mb-2">
               ₦{(t.fareFinal ?? t.fareEstimate).toLocaleString()}
             </p>
 
             {disputeId === t.id ? (
-              <div className="border-t border-neutral-200 pt-3 mt-2">
+              <div className="border-t border-ink-border pt-3 mt-2">
                 <input
                   type="number"
                   placeholder="Adjusted final fare (optional)"
-                  className="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm mb-2"
+                  className="w-full border border-ink-border-strong rounded-lg px-3 py-2 text-sm mb-2"
                   value={fareFinal}
                   onChange={(e) => setFareFinal(e.target.value)}
                 />
@@ -120,7 +120,7 @@ export default function AdminTripsPage() {
               </div>
             ) : (
               <button
-                className="text-sm text-amber-600 font-medium"
+                className="text-sm text-amber-strong font-medium"
                 onClick={() => setDisputeId(t.id)}
               >
                 Resolve dispute →
@@ -128,7 +128,7 @@ export default function AdminTripsPage() {
             )}
           </Card>
         ))}
-        {trips && trips.length === 0 && <p className="text-sm text-neutral-400">No trips yet.</p>}
+        {trips && trips.length === 0 && <p className="text-sm text-paper-faint">No trips yet.</p>}
       </div>
     </AppShell>
   );

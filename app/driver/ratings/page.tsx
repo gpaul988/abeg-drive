@@ -39,23 +39,23 @@ export default function DriverRatingsPage() {
 
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/ratings" roleLabel="Driver">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Ratings</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Ratings</h1>
 
       <Card className="mb-6">
-        <p className="text-sm text-neutral-500 mb-1">Average rating</p>
-        <p className="text-3xl font-semibold text-neutral-900">
+        <p className="text-sm text-paper-dim mb-1">Average rating</p>
+        <p className="text-3xl font-semibold text-paper">
           {profile ? `★ ${profile.ratingAvg.toFixed(1)}` : "—"}
         </p>
-        <p className="text-xs text-neutral-400 mt-1">{profile?.ratingCount ?? 0} ratings total</p>
+        <p className="text-xs text-paper-faint mt-1">{profile?.ratingCount ?? 0} ratings total</p>
       </Card>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Recent feedback</h2>
-      {trips.length === 0 && <p className="text-sm text-neutral-400">No feedback yet.</p>}
+      <h2 className="font-medium text-paper mb-3">Recent feedback</h2>
+      {trips.length === 0 && <p className="text-sm text-paper-faint">No feedback yet.</p>}
       <div className="space-y-3">
         {trips.map((t) => (
           <Card key={t.id}>
-            <p className="text-sm font-medium text-neutral-900 mb-1">★ {t.ratingCustomerToDriver}</p>
-            {t.ratingComment && <p className="text-sm text-neutral-600">&ldquo;{t.ratingComment}&rdquo;</p>}
+            <p className="text-sm font-medium text-paper mb-1">★ {t.ratingCustomerToDriver}</p>
+            {t.ratingComment && <p className="text-sm text-paper-dim">&ldquo;{t.ratingComment}&rdquo;</p>}
           </Card>
         ))}
       </div>

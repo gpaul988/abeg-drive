@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
   if (success) {
     return (
       <AuthShell title="Password updated">
-        <p className="text-sm text-neutral-600 text-center">Redirecting you to log in…</p>
+        <p className="text-sm text-paper-dim text-center">Redirecting you to log in…</p>
       </AuthShell>
     );
   }

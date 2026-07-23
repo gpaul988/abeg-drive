@@ -37,28 +37,28 @@ export default function CorporateDashboardPage() {
   if (!account) {
     return (
       <AppShell navLinks={corporateNavLinks} activeHref="/corporate/dashboard" roleLabel="Corporate Admin">
-        <p className="text-neutral-400 text-sm">Loading…</p>
+        <p className="text-paper-faint text-sm">Loading…</p>
       </AppShell>
     );
   }
 
   return (
     <AppShell navLinks={corporateNavLinks} activeHref="/corporate/dashboard" roleLabel="Corporate Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-1">{account.companyName}</h1>
-      <p className="text-neutral-500 mb-6">Corporate account overview</p>
+      <h1 className="text-xl font-semibold text-paper mb-1">{account.companyName}</h1>
+      <p className="text-paper-dim mb-6">Corporate account overview</p>
 
       <div className="grid sm:grid-cols-3 gap-4">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Employees</p>
-          <p className="text-2xl font-semibold text-neutral-900">{account.employeeUserIds.length}</p>
+          <p className="text-sm text-paper-dim mb-1">Employees</p>
+          <p className="text-2xl font-semibold text-paper">{account.employeeUserIds.length}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Total trips</p>
-          <p className="text-2xl font-semibold text-neutral-900">{tripStats?.totalTrips ?? 0}</p>
+          <p className="text-sm text-paper-dim mb-1">Total trips</p>
+          <p className="text-2xl font-semibold text-paper">{tripStats?.totalTrips ?? 0}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Total spend</p>
-          <p className="text-2xl font-semibold text-neutral-900">₦{(tripStats?.totalSpend ?? 0).toLocaleString()}</p>
+          <p className="text-sm text-paper-dim mb-1">Total spend</p>
+          <p className="text-2xl font-semibold text-paper">₦{(tripStats?.totalSpend ?? 0).toLocaleString()}</p>
         </Card>
       </div>
     </AppShell>

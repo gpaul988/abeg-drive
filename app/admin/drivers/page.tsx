@@ -54,7 +54,7 @@ export default function AdminDriversPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/drivers" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Driver directory</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Driver directory</h1>
 
       <ErrorBanner message={error} />
       <SuccessBanner message={success} />
@@ -63,8 +63,8 @@ export default function AdminDriversPage() {
         {drivers?.map((d) => (
           <Card key={d.userId} className="flex items-center justify-between">
             <div>
-              <p className="font-medium text-neutral-900">{d.email}</p>
-              <p className="text-sm text-neutral-500">{d.phone}</p>
+              <p className="font-medium text-paper">{d.email}</p>
+              <p className="text-sm text-paper-dim">{d.phone}</p>
               <div className="flex gap-2 mt-2">
                 <Badge tone={d.applicationStatus === "approved" ? "success" : "warning"}>{d.applicationStatus}</Badge>
                 <Badge tone={d.probationStatus === "graduated" ? "success" : d.probationStatus === "suspended" ? "danger" : "neutral"}>
@@ -74,8 +74,8 @@ export default function AdminDriversPage() {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm text-neutral-900">★ {d.ratingAvg.toFixed(1)}</p>
-              <p className="text-xs text-neutral-400 mb-2">{d.tripsCompleted} trips</p>
+              <p className="text-sm text-paper">★ {d.ratingAvg.toFixed(1)}</p>
+              <p className="text-xs text-paper-faint mb-2">{d.tripsCompleted} trips</p>
               {d.probationStatus !== "suspended" && (
                 <Button variant="danger" onClick={() => onSuspend(d.userId)}>
                   Suspend
@@ -84,7 +84,7 @@ export default function AdminDriversPage() {
             </div>
           </Card>
         ))}
-        {drivers && drivers.length === 0 && <p className="text-sm text-neutral-400">No drivers yet.</p>}
+        {drivers && drivers.length === 0 && <p className="text-sm text-paper-faint">No drivers yet.</p>}
       </div>
     </AppShell>
   );

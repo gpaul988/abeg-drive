@@ -1,17 +1,117 @@
 @import "tailwindcss";
 
+/* Type: Familjen Grotesk (display) + IBM Plex Sans (body) + IBM Plex Mono
+   (data readouts — trip IDs, GPS coordinates, timestamps). Self-hosted via
+   @fontsource since Google Fonts' CDN isn't reachable from this environment. */
+@import "@fontsource/familjen-grotesk/500.css";
+@import "@fontsource/familjen-grotesk/600.css";
+@import "@fontsource/familjen-grotesk/700.css";
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Ink-navy base — not pure black, keeps warmth */
+  --ink-950: #0b0f14;
+  --ink-900: #10161d;
+  --ink-850: #151d26;
+  --ink-800: #1b2530;
+  --ink-border: #223041;
+  --ink-border-strong: #2e4056;
+
+  /* Text on dark */
+  --paper: #e8eaed;
+  --paper-dim: #9aa6b2;
+  --paper-faint: #64707c;
+
+  /* Brand accents */
+  --amber: #f5a623;
+  --amber-strong: #ffb84d;
+  --teal: #2dd8c4;
+  --teal-strong: #5be8d6;
+  --danger: #ff5d5d;
+  --danger-strong: #ff8080;
+  --success: #3ddc84;
+  --warning: #f5a623;
+
+  --background: var(--ink-950);
+  --foreground: var(--paper);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-850: var(--ink-850);
+  --color-ink-800: var(--ink-800);
+  --color-ink-border: var(--ink-border);
+  --color-ink-border-strong: var(--ink-border-strong);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-paper-faint: var(--paper-faint);
+  --color-amber: var(--amber);
+  --color-amber-strong: var(--amber-strong);
+  --color-teal: var(--teal);
+  --color-teal-strong: var(--teal-strong);
+  --color-danger: var(--danger);
+  --color-danger-strong: var(--danger-strong);
+  --color-success: var(--success);
+
+  --font-display: "Familjen Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* Signature motif: a live radar ping. Reserved for states that are
+   genuinely live — a driver online, a trip in progress, an active
+   incident — never used as ambient decoration. */
+@keyframes radar-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.radar-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+}
+
+.radar-dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: radar-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.radar-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-dot::before {
+    animation: none;
+    opacity: 0;
+  }
 }

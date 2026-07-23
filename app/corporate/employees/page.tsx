@@ -67,13 +67,13 @@ export default function CorporateEmployeesPage() {
 
   return (
     <AppShell navLinks={corporateNavLinks} activeHref="/corporate/employees" roleLabel="Corporate Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Employees</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Employees</h1>
 
       <ErrorBanner message={error} />
       <SuccessBanner message={success} />
 
       <Card className="mb-6">
-        <h2 className="font-medium text-neutral-900 mb-3">Add an employee</h2>
+        <h2 className="font-medium text-paper mb-3">Add an employee</h2>
         <form onSubmit={onAdd}>
           <Field label="Email">
             <TextInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -94,12 +94,12 @@ export default function CorporateEmployeesPage() {
         {employees.map((e) => (
           <Card key={e.userId} className="flex items-center justify-between">
             <div>
-              <p className="font-medium text-neutral-900">{e.email}</p>
-              <p className="text-sm text-neutral-500">{e.phone}</p>
+              <p className="font-medium text-paper">{e.email}</p>
+              <p className="text-sm text-paper-dim">{e.phone}</p>
             </div>
           </Card>
         ))}
-        {employees.length === 0 && <p className="text-sm text-neutral-400">No employees added yet.</p>}
+        {employees.length === 0 && <p className="text-sm text-paper-faint">No employees added yet.</p>}
       </div>
     </AppShell>
   );

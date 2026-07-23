@@ -85,8 +85,8 @@ export default function IdentityPage() {
       ) : (
         <div>
           <ErrorBanner message={error} />
-          <div className="aspect-square bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-4">
-            <span className="text-neutral-400 text-sm">Camera preview</span>
+          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
+            <span className="text-paper-faint text-sm">Camera preview</span>
           </div>
           <PrimaryButton type="button" loading={loading} onClick={onCaptureSelfie}>
             Capture selfie

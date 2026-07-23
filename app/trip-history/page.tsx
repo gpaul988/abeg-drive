@@ -43,25 +43,25 @@ export default function TripHistoryPage() {
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/trip-history" roleLabel="Customer">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Trip history</h1>
-      {!trips && <p className="text-neutral-400 text-sm">Loading…</p>}
-      {trips && trips.length === 0 && <p className="text-neutral-400 text-sm">No trips yet.</p>}
+      <h1 className="text-xl font-semibold text-paper mb-6">Trip history</h1>
+      {!trips && <p className="text-paper-faint text-sm">Loading…</p>}
+      {trips && trips.length === 0 && <p className="text-paper-faint text-sm">No trips yet.</p>}
       <div className="space-y-3">
         {trips?.map((trip) => (
           <Card
             key={trip.id}
-            className="cursor-pointer hover:border-neutral-300"
+            className="cursor-pointer hover:border-ink-border-strong"
           >
             <a href={trip.status === "completed" ? `/trip/${trip.id}/receipt` : `/book/tracking/${trip.id}`}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-neutral-400">
+                <span className="text-xs text-paper-faint">
                   {new Date(trip.createdAt).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
                 </span>
                 <Badge tone={STATUS_TONE[trip.status] ?? "neutral"}>{trip.status.replace("_", " ")}</Badge>
               </div>
-              <p className="text-sm text-neutral-900 truncate">{trip.pickup.address}</p>
-              <p className="text-sm text-neutral-500 truncate">→ {trip.destinations[0]?.address}</p>
-              <p className="text-sm font-medium text-neutral-900 mt-2">
+              <p className="text-sm text-paper truncate">{trip.pickup.address}</p>
+              <p className="text-sm text-paper-dim truncate">→ {trip.destinations[0]?.address}</p>
+              <p className="text-sm font-medium text-paper mt-2">
                 ₦{(trip.fareFinal ?? trip.fareEstimate).toLocaleString()}
               </p>
             </a>

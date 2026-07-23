@@ -35,13 +35,13 @@ export default function ProbationStatusPage() {
 
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/probation-status" roleLabel="Driver">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Application & probation status</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Application & probation status</h1>
 
       {notFound && (
         <Card>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-paper-dim">
             You haven&apos;t started a driver application yet.{" "}
-            <a href="/driver/onboarding" className="text-amber-600 font-medium">
+            <a href="/driver/onboarding" className="text-amber-strong font-medium">
               Start now →
             </a>
           </p>
@@ -51,15 +51,15 @@ export default function ProbationStatusPage() {
       {data && (
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <p className="font-medium text-neutral-900">Probation status</p>
+            <p className="font-medium text-paper">Probation status</p>
             <Badge tone={data.probationStatus === "graduated" ? "success" : "warning"}>
               {data.probationStatus.replace("_", " ")}
             </Badge>
           </div>
-          <div className="w-full bg-neutral-100 rounded-full h-2 mb-2">
-            <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${data.progressPct}%` }} />
+          <div className="w-full bg-ink-850 rounded-full h-2 mb-2">
+            <div className="bg-amber h-2 rounded-full" style={{ width: `${data.progressPct}%` }} />
           </div>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-paper-dim">
             {data.tripsCompleted} of {data.probationTripsRequired} ops-monitored trips completed
           </p>
         </Card>

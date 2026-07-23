@@ -33,27 +33,27 @@ export default function DriverEarningsPage() {
 
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/earnings" roleLabel="Driver">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Earnings</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Earnings</h1>
 
       <Card className="mb-6">
-        <p className="text-sm text-neutral-500 mb-1">Total earned (all time)</p>
-        <p className="text-3xl font-semibold text-neutral-900">₦{total.toLocaleString()}</p>
-        <p className="text-xs text-neutral-400 mt-2">
+        <p className="text-sm text-paper-dim mb-1">Total earned (all time)</p>
+        <p className="text-3xl font-semibold text-paper">₦{total.toLocaleString()}</p>
+        <p className="text-xs text-paper-faint mt-2">
           Payouts settle to your linked bank account via Paystack subaccount transfer — production only, not
           simulated in this dev build.
         </p>
       </Card>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Completed trips</h2>
-      {!trips && <p className="text-sm text-neutral-400">Loading…</p>}
-      {trips && trips.length === 0 && <p className="text-sm text-neutral-400">No completed trips yet.</p>}
+      <h2 className="font-medium text-paper mb-3">Completed trips</h2>
+      {!trips && <p className="text-sm text-paper-faint">Loading…</p>}
+      {trips && trips.length === 0 && <p className="text-sm text-paper-faint">No completed trips yet.</p>}
       <div className="space-y-3">
         {trips?.map((t) => (
           <Card key={t.id} className="flex items-center justify-between">
-            <span className="text-sm text-neutral-500">
+            <span className="text-sm text-paper-dim">
               {t.completedAt && new Date(t.completedAt).toLocaleDateString("en-NG", { dateStyle: "medium" })}
             </span>
-            <span className="font-medium text-neutral-900">₦{(t.fareFinal ?? t.fareEstimate).toLocaleString()}</span>
+            <span className="font-medium text-paper">₦{(t.fareFinal ?? t.fareEstimate).toLocaleString()}</span>
           </Card>
         ))}
       </div>

@@ -41,39 +41,39 @@ export default function DashboardPage() {
 
   if (!me) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-neutral-400 text-sm">Loading…</div>
+      <div className="min-h-screen flex items-center justify-center text-paper-faint text-sm">Loading…</div>
     );
   }
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/dashboard" roleLabel="Customer">
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">
+      <h1 className="text-2xl font-semibold text-paper mb-1">
         Welcome{me.email ? `, ${me.email.split("@")[0]}` : ""}
       </h1>
-      <p className="text-neutral-500 mb-8">Ready when you are.</p>
+      <p className="text-paper-dim mb-8">Ready when you are.</p>
 
       <div className="grid sm:grid-cols-2 gap-4 mb-8">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Verification status</p>
+          <p className="text-sm text-paper-dim mb-1">Verification status</p>
           <Badge tone={me.verificationStatus === "verified" ? "success" : "warning"}>
             {me.verificationStatus}
           </Badge>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Onboarding</p>
-          <p className="font-medium text-neutral-900">
+          <p className="text-sm text-paper-dim mb-1">Onboarding</p>
+          <p className="font-medium text-paper">
             {me.onboardingComplete ? "Complete — you can book a driver" : "Incomplete"}
           </p>
         </Card>
       </div>
 
       <Card className="text-center py-10">
-        <p className="text-neutral-500 mb-4">Need a safe ride home?</p>
+        <p className="text-paper-dim mb-4">Need a safe ride home?</p>
         <Button onClick={() => router.push("/book")} disabled={!me.onboardingComplete}>
           Book a driver
         </Button>
         {!me.onboardingComplete && (
-          <p className="text-xs text-neutral-400 mt-3">
+          <p className="text-xs text-paper-faint mt-3">
             Complete identity verification and add a payment method to unlock booking.
           </p>
         )}

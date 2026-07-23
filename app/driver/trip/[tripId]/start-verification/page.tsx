@@ -32,15 +32,15 @@ export default function StartVerificationPage() {
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/dashboard" roleLabel="Driver">
       <div className="max-w-md mx-auto">
-        <h1 className="text-xl font-semibold text-neutral-900 mb-2">Confirm it&apos;s you</h1>
-        <p className="text-sm text-neutral-500 mb-6">
+        <h1 className="text-xl font-semibold text-paper mb-2">Confirm it&apos;s you</h1>
+        <p className="text-sm text-paper-dim mb-6">
           We match this against your driver profile before starting every trip — this confirms the correct driver
           showed up.
         </p>
         <ErrorBanner message={error} />
         <Card>
-          <div className="aspect-square bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-4">
-            <span className="text-neutral-400 text-sm">Camera preview</span>
+          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
+            <span className="text-paper-faint text-sm">Camera preview</span>
           </div>
           <Button className="w-full" loading={loading} onClick={onCapture}>
             Capture selfie & start trip

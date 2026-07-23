@@ -65,11 +65,11 @@ export default function EmergencyContactsPage() {
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/profile" roleLabel="Customer">
-      <a href="/profile" className="text-sm text-neutral-500 mb-4 inline-block">
+      <a href="/profile" className="text-sm text-paper-dim mb-4 inline-block">
         ← Back to profile
       </a>
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Emergency contacts</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Emergency contacts</h1>
+      <p className="text-sm text-paper-dim mb-6">
         These contacts are notified if you share a trip or if an incident is reported. At least one is required
         before your first booking.
       </p>
@@ -107,14 +107,14 @@ export default function EmergencyContactsPage() {
       <div className="space-y-3">
         {contacts?.map((c, i) => (
           <Card key={i}>
-            <p className="font-medium text-neutral-900">{c.name}</p>
-            <p className="text-sm text-neutral-500">
+            <p className="font-medium text-paper">{c.name}</p>
+            <p className="text-sm text-paper-dim">
               {c.phone} · {c.relationship}
             </p>
           </Card>
         ))}
         {contacts && contacts.length === 0 && (
-          <p className="text-sm text-neutral-400">No emergency contacts added yet.</p>
+          <p className="text-sm text-paper-faint">No emergency contacts added yet.</p>
         )}
       </div>
     </AppShell>

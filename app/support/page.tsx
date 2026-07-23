@@ -29,15 +29,15 @@ export default function SupportPage() {
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/support" roleLabel="Customer">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Support</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Support</h1>
 
-      <Card className="mb-6 bg-red-50 border-red-200">
-        <p className="text-sm font-medium text-red-800 mb-1">In an emergency during a trip?</p>
-        <p className="text-sm text-red-700 mb-3">
+      <Card className="mb-6 bg-danger/10 border-danger/30">
+        <p className="text-sm font-medium text-danger-strong mb-1">In an emergency during a trip?</p>
+        <p className="text-sm text-danger-strong mb-3">
           Use the panic button on your trip tracking screen first — it alerts our security response team
           immediately. You can also call our 24/7 emergency hotline directly:
         </p>
-        <a href="tel:+2348000000000" className="text-lg font-semibold text-red-800">
+        <a href="tel:+2348000000000" className="text-lg font-semibold text-danger-strong">
           +234 800 000 0000
         </a>
       </Card>
@@ -45,7 +45,7 @@ export default function SupportPage() {
       <SuccessBanner message={submitted ? "Your message was sent. Our team will respond by phone or email shortly." : null} />
 
       <Card>
-        <h2 className="font-medium text-neutral-900 mb-4">Send us a message</h2>
+        <h2 className="font-medium text-paper mb-4">Send us a message</h2>
         <form onSubmit={onSubmit}>
           <Field label="Subject">
             <TextInput value={subject} onChange={(e) => setSubject(e.target.value)} required />

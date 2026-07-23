@@ -43,8 +43,8 @@ export default function AdminVenuesPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/venues" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Venue partners</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Venue partners</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Phase 1 launch strategy: only whitelisted venues can request drivers on behalf of guests.
       </p>
 
@@ -52,9 +52,9 @@ export default function AdminVenuesPage() {
         {venues?.map((v) => (
           <Card key={v.id} className="flex items-center justify-between">
             <div>
-              <p className="font-medium text-neutral-900">{v.venueName}</p>
-              <p className="text-sm text-neutral-500">{v.address}</p>
-              <p className="text-xs text-neutral-400">
+              <p className="font-medium text-paper">{v.venueName}</p>
+              <p className="text-sm text-paper-dim">{v.address}</p>
+              <p className="text-xs text-paper-faint">
                 {v.contactPerson} · {v.contactPhone}
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function AdminVenuesPage() {
             </div>
           </Card>
         ))}
-        {venues && venues.length === 0 && <p className="text-sm text-neutral-400">No venue partners yet.</p>}
+        {venues && venues.length === 0 && <p className="text-sm text-paper-faint">No venue partners yet.</p>}
       </div>
     </AppShell>
   );

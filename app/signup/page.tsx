@@ -62,9 +62,9 @@ export default function SignupPage() {
         <PrimaryButton type="submit" loading={loading}>
           Continue
         </PrimaryButton>
-        <p className="text-xs text-neutral-500 text-center mt-4">
+        <p className="text-xs text-paper-dim text-center mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-amber-600 font-medium">
+          <a href="/login" className="text-amber-strong font-medium">
             Log in
           </a>
         </p>

@@ -75,35 +75,35 @@ export default function ProfilePage() {
   if (!me) {
     return (
       <AppShell navLinks={customerNavLinks} activeHref="/profile" roleLabel="Customer">
-        <p className="text-neutral-400 text-sm">Loading…</p>
+        <p className="text-paper-faint text-sm">Loading…</p>
       </AppShell>
     );
   }
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/profile" roleLabel="Customer">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Profile</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Profile</h1>
 
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Phone</p>
-          <p className="font-medium text-neutral-900 mb-4">{me.phone}</p>
-          <p className="text-sm text-neutral-500 mb-1">Email</p>
-          <p className="font-medium text-neutral-900">{me.email}</p>
+          <p className="text-sm text-paper-dim mb-1">Phone</p>
+          <p className="font-medium text-paper mb-4">{me.phone}</p>
+          <p className="text-sm text-paper-dim mb-1">Email</p>
+          <p className="font-medium text-paper">{me.email}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-2">Identity verification</p>
+          <p className="text-sm text-paper-dim mb-2">Identity verification</p>
           <Badge tone={me.verificationStatus === "verified" ? "success" : "warning"}>
             {me.verificationStatus}
           </Badge>
-          <p className="text-sm text-neutral-500 mt-4 mb-1">Trust score</p>
-          <p className="font-medium text-neutral-900">{me.profile?.trustScore ?? 100}/100</p>
+          <p className="text-sm text-paper-dim mt-4 mb-1">Trust score</p>
+          <p className="font-medium text-paper">{me.profile?.trustScore ?? 100}/100</p>
         </Card>
       </div>
 
       <div className="flex items-center justify-between mb-3">
-        <h2 className="font-medium text-neutral-900">Saved vehicles</h2>
-        <button className="text-sm text-amber-600 font-medium" onClick={() => setShowAddVehicle((s) => !s)}>
+        <h2 className="font-medium text-paper">Saved vehicles</h2>
+        <button className="text-sm text-amber-strong font-medium" onClick={() => setShowAddVehicle((s) => !s)}>
           {showAddVehicle ? "Cancel" : "+ Add vehicle"}
         </button>
       </div>
@@ -145,20 +145,20 @@ export default function ProfilePage() {
       <div className="space-y-3 mb-6">
         {(me.profile?.savedVehicles ?? []).map((v, i) => (
           <Card key={i}>
-            <p className="font-medium text-neutral-900">
+            <p className="font-medium text-paper">
               {v.make} {v.model}
             </p>
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-paper-dim">
               {v.plateNumber} · {v.transmissionType}
             </p>
           </Card>
         ))}
         {(me.profile?.savedVehicles ?? []).length === 0 && !showAddVehicle && (
-          <p className="text-sm text-neutral-400">No saved vehicles yet.</p>
+          <p className="text-sm text-paper-faint">No saved vehicles yet.</p>
         )}
       </div>
 
-      <a href="/profile/emergency-contacts" className="text-sm text-amber-600 font-medium">
+      <a href="/profile/emergency-contacts" className="text-sm text-amber-strong font-medium">
         Manage emergency contacts →
       </a>
     </AppShell>

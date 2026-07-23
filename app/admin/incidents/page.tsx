@@ -62,28 +62,28 @@ export default function AdminIncidentsPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/incidents" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Incidents</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Incidents</h1>
 
       <ErrorBanner message={error} />
       <SuccessBanner message={success} />
 
       <div className="space-y-4">
         {incidents?.map((i) => (
-          <Card key={i.id} className={i.status !== "resolved" ? "border-red-200" : ""}>
+          <Card key={i.id} className={i.status !== "resolved" ? "border-danger/30" : ""}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-neutral-900 capitalize">{i.type}</span>
+                <span className="font-medium text-paper capitalize">{i.type}</span>
                 <Badge tone={i.status === "resolved" ? "success" : i.status === "investigating" ? "warning" : "danger"}>
                   {i.status}
                 </Badge>
                 {i.escalatedToSecurityPartner && <Badge tone="danger">Escalated</Badge>}
               </div>
-              <span className="text-xs text-neutral-400">
+              <span className="text-xs text-paper-faint">
                 {new Date(i.createdAt).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
               </span>
             </div>
 
-            <div className="text-sm text-neutral-600 mb-3">
+            <div className="text-sm text-paper-dim mb-3">
               <p>Triggered by: {i.triggeredBy}</p>
               {i.trip && (
                 <>
@@ -95,11 +95,11 @@ export default function AdminIncidentsPage() {
             </div>
 
             {i.resolutionNotes && (
-              <p className="text-sm text-neutral-500 mb-3 bg-neutral-50 rounded-lg p-2">{i.resolutionNotes}</p>
+              <p className="text-sm text-paper-dim mb-3 bg-ink-950 rounded-lg p-2">{i.resolutionNotes}</p>
             )}
 
             {i.status !== "resolved" && (
-              <div className="border-t border-neutral-200 pt-3">
+              <div className="border-t border-ink-border pt-3">
                 {i.status === "open" && (
                   <Button className="mb-2" onClick={() => updateStatus(i.id, "investigating")}>
                     Start investigating
@@ -117,7 +117,7 @@ export default function AdminIncidentsPage() {
             )}
           </Card>
         ))}
-        {incidents && incidents.length === 0 && <p className="text-sm text-neutral-400">No incidents reported.</p>}
+        {incidents && incidents.length === 0 && <p className="text-sm text-paper-faint">No incidents reported.</p>}
       </div>
     </AppShell>
   );

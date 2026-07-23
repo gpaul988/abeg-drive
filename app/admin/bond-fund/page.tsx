@@ -73,8 +73,8 @@ export default function BondFundPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/bond-fund" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Bond fund</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Bond fund</h1>
+      <p className="text-sm text-paper-dim mb-6">
         A self-funded reserve pool (3% of every trip fare) used as an interim insurance mechanism until a formal
         insurtech partnership is signed.
       </p>
@@ -84,27 +84,27 @@ export default function BondFundPage() {
 
       <div className="grid sm:grid-cols-2 gap-4 mb-6">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Current balance</p>
-          <p className="text-3xl font-semibold text-neutral-900">₦{(data?.balance ?? 0).toLocaleString()}</p>
+          <p className="text-sm text-paper-dim mb-1">Current balance</p>
+          <p className="text-3xl font-semibold text-paper">₦{(data?.balance ?? 0).toLocaleString()}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Claims paid to date</p>
-          <p className="text-3xl font-semibold text-neutral-900">{data?.claimsPending ?? 0}</p>
+          <p className="text-sm text-paper-dim mb-1">Claims paid to date</p>
+          <p className="text-3xl font-semibold text-paper">{data?.claimsPending ?? 0}</p>
         </Card>
       </div>
 
       <Card className="mb-6">
-        <h2 className="font-medium text-neutral-900 mb-3">Process a claim payout</h2>
+        <h2 className="font-medium text-paper mb-3">Process a claim payout</h2>
         <form onSubmit={onPayout} className="flex flex-col sm:flex-row gap-2">
           <input
-            className="flex-1 border border-neutral-300 rounded-lg px-3 py-2 text-sm"
+            className="flex-1 border border-ink-border-strong rounded-lg px-3 py-2 text-sm"
             placeholder="Incident ID"
             value={payoutIncidentId}
             onChange={(e) => setPayoutIncidentId(e.target.value)}
           />
           <input
             type="number"
-            className="w-full sm:w-40 border border-neutral-300 rounded-lg px-3 py-2 text-sm"
+            className="w-full sm:w-40 border border-ink-border-strong rounded-lg px-3 py-2 text-sm"
             placeholder="Amount (₦)"
             value={payoutAmount}
             onChange={(e) => setPayoutAmount(e.target.value)}
@@ -113,15 +113,15 @@ export default function BondFundPage() {
         </form>
       </Card>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Recent ledger entries</h2>
+      <h2 className="font-medium text-paper mb-3">Recent ledger entries</h2>
       <div className="space-y-2">
         {data?.recentEntries.map((e) => (
           <Card key={e.id} className="flex items-center justify-between py-3">
-            <span className="text-xs text-neutral-400">{new Date(e.createdAt).toLocaleString("en-NG")}</span>
-            <span className={`text-sm font-medium ${e.contributionAmount < 0 ? "text-red-600" : "text-green-600"}`}>
+            <span className="text-xs text-paper-faint">{new Date(e.createdAt).toLocaleString("en-NG")}</span>
+            <span className={`text-sm font-medium ${e.contributionAmount < 0 ? "text-danger" : "text-success"}`}>
               {e.contributionAmount < 0 ? "-" : "+"}₦{Math.abs(e.contributionAmount).toLocaleString()}
             </span>
-            <span className="text-sm text-neutral-500">Balance: ₦{e.runningBalance.toLocaleString()}</span>
+            <span className="text-sm text-paper-dim">Balance: ₦{e.runningBalance.toLocaleString()}</span>
           </Card>
         ))}
       </div>

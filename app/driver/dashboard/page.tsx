@@ -67,7 +67,7 @@ export default function DriverDashboardPage() {
   return (
     <AppShell navLinks={driverNavLinks} activeHref="/driver/dashboard" roleLabel="Driver">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold text-neutral-900">Driver dashboard</h1>
+        <h1 className="text-xl font-semibold text-paper">Driver dashboard</h1>
         <Button
           variant={availability === "online" ? "danger" : "primary"}
           loading={loading}
@@ -81,9 +81,9 @@ export default function DriverDashboardPage() {
 
       {applicationStatus === "not_started" && (
         <Card className="mb-6">
-          <p className="text-sm text-neutral-600">
+          <p className="text-sm text-paper-dim">
             You haven&apos;t completed your driver application yet.{" "}
-            <a href="/driver/onboarding" className="text-amber-600 font-medium">
+            <a href="/driver/onboarding" className="text-amber-strong font-medium">
               Complete it now →
             </a>
           </p>
@@ -92,35 +92,35 @@ export default function DriverDashboardPage() {
 
       <div className="grid sm:grid-cols-3 gap-4 mb-8">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Availability</p>
+          <p className="text-sm text-paper-dim mb-1">Availability</p>
           <Badge tone={availability === "online" ? "success" : "neutral"}>{availability}</Badge>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Active trips</p>
-          <p className="font-semibold text-neutral-900">{trips.length}</p>
+          <p className="text-sm text-paper-dim mb-1">Active trips</p>
+          <p className="font-semibold text-paper">{trips.length}</p>
         </Card>
         <a href="/driver/probation-status">
-          <Card className="hover:border-neutral-300">
-            <p className="text-sm text-neutral-500 mb-1">Application status</p>
-            <p className="font-medium text-amber-600 text-sm">View progress →</p>
+          <Card className="hover:border-ink-border-strong">
+            <p className="text-sm text-paper-dim mb-1">Application status</p>
+            <p className="font-medium text-amber-strong text-sm">View progress →</p>
           </Card>
         </a>
       </div>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Current trips</h2>
-      {trips.length === 0 && <p className="text-sm text-neutral-400">No active trips right now.</p>}
+      <h2 className="font-medium text-paper mb-3">Current trips</h2>
+      {trips.length === 0 && <p className="text-sm text-paper-faint">No active trips right now.</p>}
       <div className="space-y-3">
         {trips.map((trip) => (
           <a key={trip.id} href={`/driver/trip/${trip.id}`}>
-            <Card className="hover:border-neutral-300">
+            <Card className="hover:border-ink-border-strong">
               <div className="flex items-center justify-between mb-2">
                 <Badge tone="info">{trip.status.replace("_", " ")}</Badge>
-                <span className="text-sm font-medium text-neutral-900">
+                <span className="text-sm font-medium text-paper">
                   ₦{trip.fareEstimate.toLocaleString()}
                 </span>
               </div>
-              <p className="text-sm text-neutral-900 truncate">{trip.pickup.address}</p>
-              <p className="text-sm text-neutral-500 truncate">→ {trip.destinations[0]?.address}</p>
+              <p className="text-sm text-paper truncate">{trip.pickup.address}</p>
+              <p className="text-sm text-paper-dim truncate">→ {trip.destinations[0]?.address}</p>
             </Card>
           </a>
         ))}

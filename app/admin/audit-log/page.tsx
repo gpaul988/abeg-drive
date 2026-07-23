@@ -41,14 +41,14 @@ export default function AdminAuditLogPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/audit-log" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Audit log</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Audit log</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Immutable record of every administrative action — visible to Super Admin only.
       </p>
 
       {forbidden && (
         <Card>
-          <p className="text-sm text-neutral-500">You don&apos;t have permission to view the audit log.</p>
+          <p className="text-sm text-paper-dim">You don&apos;t have permission to view the audit log.</p>
         </Card>
       )}
 
@@ -56,16 +56,16 @@ export default function AdminAuditLogPage() {
         {entries?.map((e) => (
           <Card key={e.id} className="text-sm">
             <div className="flex items-center justify-between mb-1">
-              <span className="font-medium text-neutral-900">{e.action.replace(/_/g, " ")}</span>
-              <span className="text-xs text-neutral-400">{new Date(e.createdAt).toLocaleString("en-NG")}</span>
+              <span className="font-medium text-paper">{e.action.replace(/_/g, " ")}</span>
+              <span className="text-xs text-paper-faint">{new Date(e.createdAt).toLocaleString("en-NG")}</span>
             </div>
-            <p className="text-neutral-500">
+            <p className="text-paper-dim">
               {e.actorRole} ({e.actorUserId.slice(0, 8)}…) → {e.targetType} {e.targetId.slice(0, 8)}…
             </p>
-            {e.details && <p className="text-neutral-400 text-xs mt-1">{e.details}</p>}
+            {e.details && <p className="text-paper-faint text-xs mt-1">{e.details}</p>}
           </Card>
         ))}
-        {entries && entries.length === 0 && <p className="text-sm text-neutral-400">No actions logged yet.</p>}
+        {entries && entries.length === 0 && <p className="text-sm text-paper-faint">No actions logged yet.</p>}
       </div>
     </AppShell>
   );

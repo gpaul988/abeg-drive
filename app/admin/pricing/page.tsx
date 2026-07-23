@@ -66,15 +66,15 @@ export default function AdminPricingPage() {
   if (!config) {
     return (
       <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/pricing" roleLabel="Admin">
-        <p className="text-neutral-400 text-sm">Loading…</p>
+        <p className="text-paper-faint text-sm">Loading…</p>
       </AppShell>
     );
   }
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/pricing" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Pricing configuration</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Pricing configuration</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Changes apply immediately to every new fare estimate — no deploy required.
       </p>
 
@@ -115,7 +115,7 @@ export default function AdminPricingPage() {
             </Field>
           </div>
 
-          <label className="flex items-center gap-2 my-4 text-sm text-neutral-700">
+          <label className="flex items-center gap-2 my-4 text-sm text-paper-dim">
             <input
               type="checkbox"
               checked={config.surgeEnabled}

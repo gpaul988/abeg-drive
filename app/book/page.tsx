@@ -129,8 +129,8 @@ export default function BookPage() {
         <div className="flex items-center gap-1.5 mb-8">
           {STEP_LABELS.map((label, i) => (
             <div key={label} className="flex-1">
-              <div className={`h-1.5 rounded-full mb-1.5 ${i + 1 <= step ? "bg-amber-500" : "bg-neutral-200"}`} />
-              <span className={`text-xs ${i + 1 === step ? "text-neutral-900 font-medium" : "text-neutral-400"}`}>
+              <div className={`h-1.5 rounded-full mb-1.5 ${i + 1 <= step ? "bg-amber" : "bg-ink-border"}`} />
+              <span className={`text-xs ${i + 1 === step ? "text-paper font-medium" : "text-paper-faint"}`}>
                 {label}
               </span>
             </div>
@@ -142,7 +142,7 @@ export default function BookPage() {
 
           {step === 1 && (
             <div>
-              <h2 className="font-semibold text-neutral-900 mb-4">Where are we picking you up?</h2>
+              <h2 className="font-semibold text-paper mb-4">Where are we picking you up?</h2>
               <Field label="Pickup address">
                 <TextInput
                   placeholder="e.g. 12 Aba Road, Port Harcourt"
@@ -151,7 +151,7 @@ export default function BookPage() {
                 />
               </Field>
 
-              <h3 className="text-sm font-medium text-neutral-700 mb-2 mt-6">Destination{destinations.length > 1 ? "s" : ""}</h3>
+              <h3 className="text-sm font-medium text-paper-dim mb-2 mt-6">Destination{destinations.length > 1 ? "s" : ""}</h3>
               {destinations.map((d, i) => (
                 <div key={i} className="flex items-start gap-2 mb-3">
                   <div className="flex-1">
@@ -165,7 +165,7 @@ export default function BookPage() {
                     <button
                       type="button"
                       onClick={() => removeStop(i)}
-                      className="text-neutral-400 hover:text-red-600 mt-2 text-sm"
+                      className="text-paper-faint hover:text-danger mt-2 text-sm"
                       aria-label="Remove stop"
                     >
                       ✕
@@ -177,7 +177,7 @@ export default function BookPage() {
                 <button
                   type="button"
                   onClick={addStop}
-                  className="text-sm text-amber-600 font-medium mb-6"
+                  className="text-sm text-amber-strong font-medium mb-6"
                 >
                   + Add another stop
                 </button>
@@ -201,8 +201,8 @@ export default function BookPage() {
 
           {step === 2 && (
             <div>
-              <h2 className="font-semibold text-neutral-900 mb-4">Tell us about your vehicle</h2>
-              <p className="text-sm text-neutral-500 mb-4">
+              <h2 className="font-semibold text-paper mb-4">Tell us about your vehicle</h2>
+              <p className="text-sm text-paper-dim mb-4">
                 We match you with a driver competent in your transmission type.
               </p>
               <div className="grid grid-cols-2 gap-3">
@@ -252,13 +252,13 @@ export default function BookPage() {
 
           {step === 3 && (
             <div>
-              <h2 className="font-semibold text-neutral-900 mb-4">When do you need a driver?</h2>
+              <h2 className="font-semibold text-paper mb-4">When do you need a driver?</h2>
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <button
                   type="button"
                   onClick={() => setScheduleMode("now")}
                   className={`border rounded-lg py-3 text-sm font-medium ${
-                    scheduleMode === "now" ? "border-amber-500 bg-amber-50 text-amber-700" : "border-neutral-300 text-neutral-600"
+                    scheduleMode === "now" ? "border-amber bg-amber/10 text-amber-strong" : "border-ink-border-strong text-paper-dim"
                   }`}
                 >
                   Now
@@ -267,7 +267,7 @@ export default function BookPage() {
                   type="button"
                   onClick={() => setScheduleMode("later")}
                   className={`border rounded-lg py-3 text-sm font-medium ${
-                    scheduleMode === "later" ? "border-amber-500 bg-amber-50 text-amber-700" : "border-neutral-300 text-neutral-600"
+                    scheduleMode === "later" ? "border-amber bg-amber/10 text-amber-strong" : "border-ink-border-strong text-paper-dim"
                   }`}
                 >
                   Schedule for later
@@ -295,26 +295,26 @@ export default function BookPage() {
 
           {step === 4 && fare && (
             <div>
-              <h2 className="font-semibold text-neutral-900 mb-4">Confirm your booking</h2>
-              <div className="bg-neutral-50 rounded-xl p-4 mb-4 text-sm">
+              <h2 className="font-semibold text-paper mb-4">Confirm your booking</h2>
+              <div className="bg-ink-950 rounded-xl p-4 mb-4 text-sm">
                 <div className="flex justify-between py-1">
-                  <span className="text-neutral-500">Base fare</span>
-                  <span className="text-neutral-900">₦{fare.baseFare.toLocaleString()}</span>
+                  <span className="text-paper-dim">Base fare</span>
+                  <span className="text-paper">₦{fare.baseFare.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-neutral-500">Distance ({fare.distanceKm} km)</span>
-                  <span className="text-neutral-900">₦{fare.distanceFare.toLocaleString()}</span>
+                  <span className="text-paper-dim">Distance ({fare.distanceKm} km)</span>
+                  <span className="text-paper">₦{fare.distanceFare.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-neutral-500">Escort driver surcharge</span>
-                  <span className="text-neutral-900">₦{fare.escortSurcharge.toLocaleString()}</span>
+                  <span className="text-paper-dim">Escort driver surcharge</span>
+                  <span className="text-paper">₦{fare.escortSurcharge.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between py-2 border-t border-neutral-200 mt-1 font-semibold">
-                  <span className="text-neutral-900">Total</span>
-                  <span className="text-neutral-900">₦{fare.total.toLocaleString()}</span>
+                <div className="flex justify-between py-2 border-t border-ink-border mt-1 font-semibold">
+                  <span className="text-paper">Total</span>
+                  <span className="text-paper">₦{fare.total.toLocaleString()}</span>
                 </div>
               </div>
-              <p className="text-xs text-neutral-400 mb-4">
+              <p className="text-xs text-paper-faint mb-4">
                 A second driver always accompanies your primary driver, at no extra step for you — it&apos;s built into
                 every fare.
               </p>

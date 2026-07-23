@@ -41,34 +41,34 @@ export default function SecurityDashboardPage() {
   return (
     <AppShell navLinks={securityNavLinks} activeHref="/security/dashboard" roleLabel="Security Agent">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold text-neutral-900">Live safety response</h1>
+        <h1 className="text-xl font-semibold text-paper">Live safety response</h1>
         {openIncidents.length > 0 && (
           <Badge tone="danger">{openIncidents.length} open incident{openIncidents.length > 1 ? "s" : ""}</Badge>
         )}
       </div>
 
-      <div className="aspect-[21/9] bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-8">
-        <span className="text-neutral-400 text-sm">
+      <div className="aspect-[21/9] bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-8">
+        <span className="text-paper-faint text-sm">
           Live trip map with incident pins — requires Google Maps Platform key in production
         </span>
       </div>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Active alerts</h2>
+      <h2 className="font-medium text-paper mb-3">Active alerts</h2>
       {openIncidents.length === 0 && (
         <Card>
-          <p className="text-sm text-neutral-500">No active alerts. All clear.</p>
+          <p className="text-sm text-paper-dim">No active alerts. All clear.</p>
         </Card>
       )}
       <div className="space-y-3">
         {openIncidents.map((i) => (
           <a key={i.id} href="/security/incidents">
-            <Card className="border-red-200 hover:border-red-300">
+            <Card className="border-danger/30 hover:border-red-300">
               <div className="flex items-center justify-between mb-1">
-                <span className="font-medium text-neutral-900 capitalize">{i.type}</span>
+                <span className="font-medium text-paper capitalize">{i.type}</span>
                 <Badge tone="danger">{i.status}</Badge>
               </div>
-              {i.trip && <p className="text-sm text-neutral-600">{i.trip.pickup.address}</p>}
-              <p className="text-xs text-neutral-400 mt-1">
+              {i.trip && <p className="text-sm text-paper-dim">{i.trip.pickup.address}</p>}
+              <p className="text-xs text-paper-faint mt-1">
                 {new Date(i.createdAt).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
               </p>
             </Card>

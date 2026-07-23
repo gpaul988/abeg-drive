@@ -58,7 +58,7 @@ export default function VerifyOtpPage() {
         <PrimaryButton type="submit" loading={loading} disabled={code.length !== 6}>
           Verify
         </PrimaryButton>
-        <p className="text-xs text-neutral-400 text-center mt-4">
+        <p className="text-xs text-paper-faint text-center mt-4">
           Dev mode: check the server console log for your OTP code.
         </p>
       </form>

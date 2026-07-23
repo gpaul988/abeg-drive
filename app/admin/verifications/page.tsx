@@ -75,8 +75,8 @@ export default function VerificationsQueuePage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/verifications" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Verification queue</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Verification queue</h1>
+      <p className="text-sm text-paper-dim mb-6">
         Driver applications awaiting manual review. No FRSC database integration in this MVP — every application
         requires a human decision.
       </p>
@@ -84,15 +84,15 @@ export default function VerificationsQueuePage() {
       <ErrorBanner message={error} />
       <SuccessBanner message={success} />
 
-      {queue && queue.length === 0 && <p className="text-sm text-neutral-400">Queue is empty.</p>}
+      {queue && queue.length === 0 && <p className="text-sm text-paper-faint">Queue is empty.</p>}
 
       <div className="space-y-4">
         {queue?.map((item) => (
           <Card key={item.userId}>
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="font-medium text-neutral-900">{item.email}</p>
-                <p className="text-sm text-neutral-500">{item.phone}</p>
+                <p className="font-medium text-paper">{item.email}</p>
+                <p className="text-sm text-paper-dim">{item.phone}</p>
               </div>
               <Badge tone={item.ninOnFile && item.bvnOnFile ? "success" : "warning"}>
                 {item.ninOnFile && item.bvnOnFile ? "NIN + BVN verified" : "Missing identity docs"}
@@ -101,33 +101,33 @@ export default function VerificationsQueuePage() {
 
             <div className="grid sm:grid-cols-2 gap-3 text-sm mb-4">
               <div>
-                <p className="text-neutral-500">License</p>
-                <p className="text-neutral-900">{item.licenseNumber ?? "—"}</p>
-                <p className="text-xs text-neutral-400">
+                <p className="text-paper-dim">License</p>
+                <p className="text-paper">{item.licenseNumber ?? "—"}</p>
+                <p className="text-xs text-paper-faint">
                   Expires {item.licenseExpiry ? new Date(item.licenseExpiry).toLocaleDateString("en-NG") : "—"}
                 </p>
               </div>
               <div>
-                <p className="text-neutral-500">Guarantor</p>
-                <p className="text-neutral-900">{item.guarantor?.name ?? "—"}</p>
-                <p className="text-xs text-neutral-400">
+                <p className="text-paper-dim">Guarantor</p>
+                <p className="text-paper">{item.guarantor?.name ?? "—"}</p>
+                <p className="text-xs text-paper-faint">
                   {item.guarantor?.phone} · {item.guarantor?.relationship}
                 </p>
               </div>
               <div>
-                <p className="text-neutral-500">Vehicle competency</p>
-                <p className="text-neutral-900 capitalize">{item.vehicleCompetency.join(", ")}</p>
+                <p className="text-paper-dim">Vehicle competency</p>
+                <p className="text-paper capitalize">{item.vehicleCompetency.join(", ")}</p>
               </div>
               <div>
-                <p className="text-neutral-500">Submitted</p>
-                <p className="text-neutral-900">{new Date(item.submittedAt).toLocaleDateString("en-NG")}</p>
+                <p className="text-paper-dim">Submitted</p>
+                <p className="text-paper">{new Date(item.submittedAt).toLocaleDateString("en-NG")}</p>
               </div>
             </div>
 
             {rejectingId === item.userId ? (
               <div className="flex gap-2">
                 <input
-                  className="flex-1 border border-neutral-300 rounded-lg px-3 py-2 text-sm"
+                  className="flex-1 border border-ink-border-strong rounded-lg px-3 py-2 text-sm"
                   placeholder="Reason for rejection"
                   value={rejectReason}
                   onChange={(e) => setRejectReason(e.target.value)}

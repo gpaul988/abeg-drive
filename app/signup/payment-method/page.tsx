@@ -96,7 +96,7 @@ export default function PaymentMethodPage() {
         <PrimaryButton type="submit" loading={loading}>
           Finish setup
         </PrimaryButton>
-        <p className="text-xs text-neutral-400 text-center mt-4">
+        <p className="text-xs text-paper-faint text-center mt-4">
           Secured via Paystack. Dev mode uses a mock tokenizer — no real card data is sent anywhere.
         </p>
       </form>

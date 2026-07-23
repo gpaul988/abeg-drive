@@ -55,8 +55,8 @@ export default function PaymentMethodsPage() {
 
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/payment-methods" roleLabel="Customer">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-2">Payment method</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-xl font-semibold text-paper mb-2">Payment method</h1>
+      <p className="text-sm text-paper-dim mb-6">
         A card on file is required for every booking — this removes anonymity and is a core part of how we keep
         rides safe.
       </p>
@@ -67,8 +67,8 @@ export default function PaymentMethodsPage() {
       {hasCard && (
         <Card className="mb-6 flex items-center justify-between">
           <div>
-            <p className="font-medium text-neutral-900">Card on file</p>
-            <p className="text-sm text-neutral-500">•••• •••• •••• ••••</p>
+            <p className="font-medium text-paper">Card on file</p>
+            <p className="text-sm text-paper-dim">•••• •••• •••• ••••</p>
           </div>
         </Card>
       )}

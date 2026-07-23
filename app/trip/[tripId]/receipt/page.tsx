@@ -43,36 +43,36 @@ export default function ReceiptPage() {
   return (
     <AppShell navLinks={customerNavLinks} activeHref="/trip-history" roleLabel="Customer">
       <div className="max-w-md mx-auto">
-        <h1 className="text-xl font-semibold text-neutral-900 mb-4">Receipt</h1>
-        {error && <p className="text-sm text-neutral-500">{error}</p>}
+        <h1 className="text-xl font-semibold text-paper mb-4">Receipt</h1>
+        {error && <p className="text-sm text-paper-dim">{error}</p>}
         {receipt && (
           <Card>
-            <p className="text-xs text-neutral-400 mb-1">Trip ID</p>
-            <p className="text-sm font-mono text-neutral-700 mb-4">{receipt.tripId}</p>
+            <p className="text-xs text-paper-faint mb-1">Trip ID</p>
+            <p className="text-sm font-mono text-paper-dim mb-4">{receipt.tripId}</p>
 
             <div className="space-y-1 text-sm mb-4">
-              <p className="text-neutral-500">From</p>
-              <p className="text-neutral-900">{receipt.pickup.address}</p>
-              <p className="text-neutral-500 mt-2">To</p>
+              <p className="text-paper-dim">From</p>
+              <p className="text-paper">{receipt.pickup.address}</p>
+              <p className="text-paper-dim mt-2">To</p>
               {receipt.destinations.map((d, i) => (
-                <p key={i} className="text-neutral-900">
+                <p key={i} className="text-paper">
                   {d.address}
                 </p>
               ))}
             </div>
 
             <div className="text-sm mb-4">
-              <p className="text-neutral-500">Vehicle</p>
-              <p className="text-neutral-900">
+              <p className="text-paper-dim">Vehicle</p>
+              <p className="text-paper">
                 {receipt.vehicle.make} {receipt.vehicle.model} — {receipt.vehicle.plateNumber}
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-neutral-200 pt-4 font-semibold">
-              <span className="text-neutral-900">Total paid</span>
-              <span className="text-neutral-900">₦{receipt.fareFinal.toLocaleString()}</span>
+            <div className="flex justify-between border-t border-ink-border pt-4 font-semibold">
+              <span className="text-paper">Total paid</span>
+              <span className="text-paper">₦{receipt.fareFinal.toLocaleString()}</span>
             </div>
-            <p className="text-xs text-neutral-400 mt-1 capitalize">Payment status: {receipt.paymentStatus}</p>
+            <p className="text-xs text-paper-faint mt-1 capitalize">Payment status: {receipt.paymentStatus}</p>
           </Card>
         )}
       </div>

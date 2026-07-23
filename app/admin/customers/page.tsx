@@ -35,23 +35,23 @@ export default function AdminCustomersPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/customers" roleLabel="Admin">
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Customer directory</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Customer directory</h1>
 
       <div className="space-y-3">
         {customers?.map((c) => (
           <Card key={c.userId} className="flex items-center justify-between">
             <div>
-              <p className="font-medium text-neutral-900">{c.email}</p>
-              <p className="text-sm text-neutral-500">{c.phone}</p>
+              <p className="font-medium text-paper">{c.email}</p>
+              <p className="text-sm text-paper-dim">{c.phone}</p>
             </div>
             <div className="flex items-center gap-2">
               {c.flagged && <Badge tone="danger">Flagged</Badge>}
               <Badge tone={c.verificationStatus === "verified" ? "success" : "warning"}>{c.verificationStatus}</Badge>
-              <span className="text-sm text-neutral-600 w-16 text-right">{c.trustScore}/100</span>
+              <span className="text-sm text-paper-dim w-16 text-right">{c.trustScore}/100</span>
             </div>
           </Card>
         ))}
-        {customers && customers.length === 0 && <p className="text-sm text-neutral-400">No customers yet.</p>}
+        {customers && customers.length === 0 && <p className="text-sm text-paper-faint">No customers yet.</p>}
       </div>
     </AppShell>
   );

@@ -51,44 +51,44 @@ export default function AdminDashboardPage() {
 
   return (
     <AppShell navLinks={getAdminNavLinks(role)} activeHref="/admin/dashboard" roleLabel={roleLabel(role)}>
-      <h1 className="text-xl font-semibold text-neutral-900 mb-6">Operations overview</h1>
+      <h1 className="text-xl font-semibold text-paper mb-6">Operations overview</h1>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Active trips</p>
-          <p className="text-2xl font-semibold text-neutral-900">{activeTrips.length}</p>
+          <p className="text-sm text-paper-dim mb-1">Active trips</p>
+          <p className="text-2xl font-semibold text-paper">{activeTrips.length}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Drivers online</p>
-          <p className="text-2xl font-semibold text-neutral-900">{onlineDrivers.length}</p>
+          <p className="text-sm text-paper-dim mb-1">Drivers online</p>
+          <p className="text-2xl font-semibold text-paper">{onlineDrivers.length}</p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Open incidents</p>
-          <p className={`text-2xl font-semibold ${openIncidents.length > 0 ? "text-red-600" : "text-neutral-900"}`}>
+          <p className="text-sm text-paper-dim mb-1">Open incidents</p>
+          <p className={`text-2xl font-semibold ${openIncidents.length > 0 ? "text-danger" : "text-paper"}`}>
             {openIncidents.length}
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-neutral-500 mb-1">Total drivers</p>
-          <p className="text-2xl font-semibold text-neutral-900">{drivers.length}</p>
+          <p className="text-sm text-paper-dim mb-1">Total drivers</p>
+          <p className="text-2xl font-semibold text-paper">{drivers.length}</p>
         </Card>
       </div>
 
-      <div className="aspect-[21/9] bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-8">
-        <span className="text-neutral-400 text-sm">
+      <div className="aspect-[21/9] bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-8">
+        <span className="text-paper-faint text-sm">
           Live trip map — requires Google Maps Platform key in production
         </span>
       </div>
 
-      <h2 className="font-medium text-neutral-900 mb-3">Recent incidents</h2>
+      <h2 className="font-medium text-paper mb-3">Recent incidents</h2>
       <div className="space-y-3">
         {incidents.slice(0, 5).map((i) => (
           <Card key={i.id} className="flex items-center justify-between">
-            <span className="text-sm text-neutral-900 capitalize">{i.type}</span>
+            <span className="text-sm text-paper capitalize">{i.type}</span>
             <Badge tone={i.status === "resolved" ? "success" : "danger"}>{i.status}</Badge>
           </Card>
         ))}
-        {incidents.length === 0 && <p className="text-sm text-neutral-400">No incidents reported.</p>}
+        {incidents.length === 0 && <p className="text-sm text-paper-faint">No incidents reported.</p>}
       </div>
     </AppShell>
   );

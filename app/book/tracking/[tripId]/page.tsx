@@ -75,7 +75,7 @@ export default function TrackingPage() {
   if (!data) {
     return (
       <AppShell navLinks={customerNavLinks} activeHref="/book" roleLabel="Customer">
-        <p className="text-neutral-400 text-sm">Loading trip…</p>
+        <p className="text-paper-faint text-sm">Loading trip…</p>
       </AppShell>
     );
   }
@@ -86,7 +86,7 @@ export default function TrackingPage() {
     <AppShell navLinks={customerNavLinks} activeHref="/book" roleLabel="Customer">
       <div className="max-w-xl mx-auto">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-semibold text-neutral-900">Your trip</h1>
+          <h1 className="text-xl font-semibold text-paper">Your trip</h1>
           <Badge tone={statusInfo.tone}>{statusInfo.label}</Badge>
         </div>
 
@@ -94,32 +94,32 @@ export default function TrackingPage() {
         <SuccessBanner message={success} />
 
         <Card className="mb-4">
-          <div className="aspect-video bg-neutral-100 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center mb-4">
-            <span className="text-neutral-400 text-sm">
+          <div className="aspect-video bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
+            <span className="text-paper-faint text-sm">
               Live map — requires Google Maps Platform key in production
             </span>
           </div>
 
           <div className="space-y-2 text-sm mb-4">
             <div className="flex gap-2">
-              <span className="w-2 h-2 mt-1.5 rounded-full bg-neutral-900 shrink-0" />
-              <span className="text-neutral-700">{data.pickup.address}</span>
+              <span className="w-2 h-2 mt-1.5 rounded-full bg-paper shrink-0" />
+              <span className="text-paper-dim">{data.pickup.address}</span>
             </div>
             {data.destinations.map((d, i) => (
               <div key={i} className="flex gap-2">
-                <span className="w-2 h-2 mt-1.5 rounded-full bg-amber-500 shrink-0" />
-                <span className="text-neutral-700">{d.address}</span>
+                <span className="w-2 h-2 mt-1.5 rounded-full bg-amber shrink-0" />
+                <span className="text-paper-dim">{d.address}</span>
               </div>
             ))}
           </div>
 
           {data.driver && (
-            <div className="flex items-center justify-between border-t border-neutral-200 pt-4">
+            <div className="flex items-center justify-between border-t border-ink-border pt-4">
               <div>
-                <p className="font-medium text-neutral-900 capitalize">{data.driver.name}</p>
-                <p className="text-xs text-neutral-500">★ {data.driver.ratingAvg.toFixed(1)}</p>
+                <p className="font-medium text-paper capitalize">{data.driver.name}</p>
+                <p className="text-xs text-paper-dim">★ {data.driver.ratingAvg.toFixed(1)}</p>
               </div>
-              <p className="text-sm text-neutral-600">ETA {data.driver.etaMinutes} min</p>
+              <p className="text-sm text-paper-dim">ETA {data.driver.etaMinutes} min</p>
             </div>
           )}
         </Card>
@@ -135,8 +135,8 @@ export default function TrackingPage() {
 
         {shareUrl && (
           <Card className="mb-4">
-            <p className="text-xs text-neutral-500 mb-1">Share this link — no login required to view:</p>
-            <code className="text-xs break-all text-neutral-700">{shareUrl}</code>
+            <p className="text-xs text-paper-dim mb-1">Share this link — no login required to view:</p>
+            <code className="text-xs break-all text-paper-dim">{shareUrl}</code>
           </Card>
         )}
 

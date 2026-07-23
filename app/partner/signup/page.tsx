@@ -74,7 +74,7 @@ export default function PartnerSignupPage() {
         <PrimaryButton type="submit" loading={loading}>
           Apply as a venue partner
         </PrimaryButton>
-        <p className="text-xs text-neutral-400 text-center mt-4">
+        <p className="text-xs text-paper-faint text-center mt-4">
           New venues start un-whitelisted pending a quick review by our ops team.
         </p>
       </form>
