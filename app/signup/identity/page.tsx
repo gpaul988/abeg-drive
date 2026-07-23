@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell, ErrorBanner, PrimaryButton, TextField } from "@/components/AuthShell";
+import { SelfieCapture } from "@/components/SelfieCapture";
 import { apiPost, getSignupState } from "@/lib/apiClient";
 
 export default function IdentityPage() {
@@ -38,18 +39,20 @@ export default function IdentityPage() {
     setStage("selfie");
   }
 
-  async function onCaptureSelfie() {
+  async function onCaptureSelfie(selfieImageBase64: string) {
     setError(null);
     setLoading(true);
-    // In production this triggers the device camera + liveness SDK and
-    // uploads the captured frame. The dev stub sends a placeholder payload.
-    const { status, data } = await apiPost<{ match: boolean }>("/auth/identity/selfie-liveness", {
-      userId,
-      selfieImageBase64: "dev-placeholder-selfie-data",
-    });
+    const { status, data } = await apiPost<{ match: boolean; error?: string }>(
+      "/auth/identity/selfie-liveness",
+      { userId, selfieImageBase64 }
+    );
     setLoading(false);
     if (status !== 200 || !data.match) {
-      setError("Liveness check failed. Please make sure your face is clearly visible and try again.");
+      setError(
+        data.error === "validation_error"
+          ? "That doesn't look like a valid photo. Please retake your selfie."
+          : "Liveness check failed. Please make sure your face is clearly visible and try again."
+      );
       return;
     }
     router.push("/signup/payment-method");
@@ -85,12 +88,7 @@ export default function IdentityPage() {
       ) : (
         <div>
           <ErrorBanner message={error} />
-          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
-            <span className="text-paper-faint text-sm">Camera preview</span>
-          </div>
-          <PrimaryButton type="button" loading={loading} onClick={onCaptureSelfie}>
-            Capture selfie
-          </PrimaryButton>
+          <SelfieCapture onCapture={onCaptureSelfie} disabled={loading} />
         </div>
       )}
     </AuthShell>

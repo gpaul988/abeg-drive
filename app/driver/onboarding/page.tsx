@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell, ErrorBanner, PrimaryButton, TextField } from "@/components/AuthShell";
 import { Field, Select } from "@/components/ui";
+import { SelfieCapture } from "@/components/SelfieCapture";
 import { apiPost, getSession, getSignupState, saveSession } from "@/lib/apiClient";
 
 type Stage = "nin" | "selfie" | "competency" | "documents" | "done";
@@ -52,16 +53,20 @@ export default function DriverOnboardingPage() {
     setStage("selfie");
   }
 
-  async function onCaptureSelfie() {
+  async function onCaptureSelfie(selfieImageBase64: string) {
     setError(null);
     setLoading(true);
-    const { status, data } = await apiPost<{ match: boolean }>("/auth/identity/selfie-liveness", {
-      userId,
-      selfieImageBase64: "dev-placeholder-selfie-data",
-    });
+    const { status, data } = await apiPost<{ match: boolean; error?: string }>(
+      "/auth/identity/selfie-liveness",
+      { userId, selfieImageBase64 }
+    );
     setLoading(false);
     if (status !== 200 || !data.match) {
-      setError("Liveness check failed. Please try again with your face clearly visible.");
+      setError(
+        data.error === "validation_error"
+          ? "That doesn't look like a valid photo. Please retake your selfie."
+          : "Liveness check failed. Please try again with your face clearly visible."
+      );
       return;
     }
     setStage("competency");
@@ -161,12 +166,7 @@ export default function DriverOnboardingPage() {
       {stage === "selfie" && (
         <div>
           <ErrorBanner message={error} />
-          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
-            <span className="text-paper-faint text-sm">Camera preview</span>
-          </div>
-          <PrimaryButton type="button" loading={loading} onClick={onCaptureSelfie}>
-            Capture selfie
-          </PrimaryButton>
+          <SelfieCapture onCapture={onCaptureSelfie} disabled={loading} />
         </div>
       )}
 

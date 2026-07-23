@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { AppShell, Button, Card, ErrorBanner } from "@/components/ui";
+import { AppShell, Card, ErrorBanner } from "@/components/ui";
+import { SelfieCapture } from "@/components/SelfieCapture";
 import { apiPost, getSession } from "@/lib/apiClient";
 import { driverNavLinks } from "@/lib/navLinks";
 
@@ -12,18 +13,22 @@ export default function StartVerificationPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function onCapture() {
+  async function onCapture(selfieImageBase64: string) {
     setError(null);
     setLoading(true);
     const session = getSession()!;
     const { status, data } = await apiPost<{ match: boolean; error?: string }>(
       `/drivers/me/trips/${params.tripId}/start-selfie-verify`,
-      { selfieImageBase64: "dev-placeholder-selfie-data" },
+      { selfieImageBase64 },
       session.accessToken
     );
     setLoading(false);
     if (status !== 200 || !data.match) {
-      setError("Liveness check failed — this confirms the correct driver is starting the trip. Please try again.");
+      setError(
+        data.error === "validation_error"
+          ? "That doesn't look like a valid photo. Please retake your selfie."
+          : "Liveness check failed — this confirms the correct driver is starting the trip. Please try again."
+      );
       return;
     }
     router.push(`/driver/trip/${params.tripId}`);
@@ -39,12 +44,7 @@ export default function StartVerificationPage() {
         </p>
         <ErrorBanner message={error} />
         <Card>
-          <div className="aspect-square bg-ink-850 rounded-xl border border-dashed border-ink-border-strong flex items-center justify-center mb-4">
-            <span className="text-paper-faint text-sm">Camera preview</span>
-          </div>
-          <Button className="w-full" loading={loading} onClick={onCapture}>
-            Capture selfie & start trip
-          </Button>
+          <SelfieCapture onCapture={onCapture} disabled={loading} />
         </Card>
       </div>
     </AppShell>

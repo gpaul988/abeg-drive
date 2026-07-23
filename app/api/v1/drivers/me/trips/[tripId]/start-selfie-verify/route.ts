@@ -4,7 +4,17 @@ import { requireUser } from "@/lib/requireAuth";
 import { getTrip, updateTrip } from "@/lib/repositories/tripRepository";
 import { verifySelfieLiveness } from "@/lib/providers/kyc";
 
-const schema = z.object({ selfieImageBase64: z.string().min(10) });
+// Same integrity bar as signup identity verification — a real captured
+// image, not an arbitrary placeholder string.
+const schema = z.object({
+  selfieImageBase64: z
+    .string()
+    .min(2000, "This doesn't look like a real photo — please retake your selfie")
+    .refine(
+      (val) => val.startsWith("data:image/") || /^[A-Za-z0-9+/=]+$/.test(val),
+      "Please provide a valid image capture"
+    ),
+});
 
 export async function POST(req: Request, { params }: { params: Promise<{ tripId: string }> }) {
   const auth = await requireUser(req);

@@ -42,8 +42,14 @@ export async function verifySelfieLiveness(
   userId: string,
   _selfieImageBase64: string
 ): Promise<SelfieLivenessResult> {
-  // Dev stub: always passes and returns a synthetic reference id.
-  // Production: send image to the KYC provider's liveness+face-match
-  // endpoint and compare against the ID photo captured at NIN verification.
+  // Dev stub: the actual face-match/liveness ML call to a KYC provider
+  // isn't available in this sandbox, so this always returns a match once
+  // it's called. What changed: the *caller* now enforces (via
+  // selfieLivenessSchema in lib/validation.ts) that a real captured photo
+  // was submitted — a minimum-size, image-shaped payload from the device
+  // camera — rather than accepting an arbitrary short placeholder string.
+  // This function is still the integration point for a real provider,
+  // which would additionally reject a genuine non-match (e.g. wrong
+  // person, no face detected, spoofed photo-of-a-photo).
   return { match: true, livenessRef: `liveness_${userId}_${Date.now()}` };
 }

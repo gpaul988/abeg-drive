@@ -28,9 +28,18 @@ export const ninVerifySchema = z.object({
 
 export const selfieLivenessSchema = z.object({
   userId: z.string().uuid(),
-  // In production this is a multipart image upload routed to Prembly/
-  // Smile Identity. For MVP we accept a base64 placeholder reference.
-  selfieImageBase64: z.string().min(10),
+  // Must be a real captured image (data URL from canvas.toDataURL, or a
+  // raw base64 payload from a native camera capture) — not an arbitrary
+  // placeholder string. A genuine JPEG/PNG frame from a device camera is
+  // reliably several KB at minimum; 2000 chars is a conservative floor
+  // that rejects trivial fake strings while accepting real captures.
+  selfieImageBase64: z
+    .string()
+    .min(2000, "This doesn't look like a real photo — please retake your selfie")
+    .refine(
+      (val) => val.startsWith("data:image/") || /^[A-Za-z0-9+/=]+$/.test(val),
+      "Please provide a valid image capture"
+    ),
 });
 
 export const refreshTokenSchema = z.object({
