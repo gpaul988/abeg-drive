@@ -39,3 +39,12 @@ export const securityNavLinks = [
   { href: "/security/dashboard", label: "Live map" },
   { href: "/security/incidents", label: "Incidents" },
 ];
+
+export const corporateNavLinks = [
+  { href: "/corporate/dashboard", label: "Overview" },
+  { href: "/corporate/employees", label: "Employees" },
+  { href: "/corporate/billing", label: "Billing" },
+  { href: "/corporate/reports", label: "Reports" },
+];
+
+export const partnerNavLinks = [{ href: "/partner/dashboard", label: "Requests" }];

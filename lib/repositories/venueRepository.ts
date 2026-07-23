@@ -3,6 +3,7 @@ import { getDb } from "../db";
 import { VenuePartner } from "../types";
 
 export async function createVenuePartner(input: {
+  ownerUserId: string;
   venueName: string;
   address: string;
   contactPerson: string;
@@ -11,6 +12,7 @@ export async function createVenuePartner(input: {
   const db = await getDb();
   const venue: VenuePartner = {
     id: randomUUID(),
+    ownerUserId: input.ownerUserId,
     venueName: input.venueName,
     address: input.address,
     contactPerson: input.contactPerson,
@@ -23,6 +25,11 @@ export async function createVenuePartner(input: {
   db.data.venuePartners.push(venue);
   await db.write();
   return venue;
+}
+
+export async function findVenuePartnerByOwner(ownerUserId: string): Promise<VenuePartner | undefined> {
+  const db = await getDb();
+  return db.data.venuePartners.find((v) => v.ownerUserId === ownerUserId);
 }
 
 export async function listVenuePartners(): Promise<VenuePartner[]> {

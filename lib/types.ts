@@ -174,6 +174,15 @@ export interface Trip {
   driverPrimaryId?: string;
   driverEscortId?: string;
 
+  // Set when a Venue Partner books on behalf of a guest who may not have
+  // their own AbegDrive account (spec section 3.6 / API section 5). In
+  // that case customerId is the venue partner's own user id (so existing
+  // access-control and rating logic keeps working unmodified) and these
+  // fields carry the actual rider's details.
+  requestedByVenueId?: string;
+  guestName?: string;
+  guestPhone?: string;
+
   pickup: TripLocation;
   destinations: TripLocation[]; // multi-stop supported, in order
   scheduledTime?: string; // undefined = "now"
@@ -237,6 +246,7 @@ export interface BondFundLedgerEntry {
 
 export interface CorporateAccount {
   id: string;
+  ownerUserId: string; // the corporate_admin user who manages this account
   companyName: string;
   rcNumber: string;
   billingContact: string;
@@ -249,6 +259,7 @@ export interface CorporateAccount {
 
 export interface VenuePartner {
   id: string;
+  ownerUserId: string;
   venueName: string;
   address: string;
   contactPerson: string;

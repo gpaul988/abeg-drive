@@ -9,6 +9,9 @@ export async function createTrip(input: {
   vehicleSnapshot: VehicleSnapshot;
   scheduledTime?: string;
   fareEstimate: number;
+  requestedByVenueId?: string;
+  guestName?: string;
+  guestPhone?: string;
 }): Promise<Trip> {
   const db = await getDb();
   const trip: Trip = {
@@ -22,6 +25,9 @@ export async function createTrip(input: {
     fareEstimate: input.fareEstimate,
     paymentStatus: "pending",
     livelocationPings: [],
+    requestedByVenueId: input.requestedByVenueId,
+    guestName: input.guestName,
+    guestPhone: input.guestPhone,
     createdAt: new Date().toISOString(),
   };
   db.data.trips.push(trip);
