@@ -126,3 +126,25 @@ export const driverDocumentsSchema = z.object({
 export const availabilitySchema = z.object({
   availability: z.enum(["offline", "online"]),
 });
+
+// --- Contact ---
+
+export const contactMessageSchema = z.object({
+  name: z.string().min(2, "Enter your full name"),
+  email: z.string().email(),
+  phone: z.string().regex(phoneRegex, "Enter a valid Nigerian phone number").optional().or(z.literal("")),
+  category: z.enum(["general", "support", "press", "partnership", "safety_concern"]),
+  message: z.string().min(10, "Tell us a bit more — at least 10 characters").max(2000),
+});
+
+export const contactMessageUpdateSchema = z.object({
+  status: z.enum(["new", "in_progress", "resolved"]).optional(),
+  adminNotes: z.string().max(1000).optional(),
+});
+
+// --- Account security ---
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(8, "New password must be at least 8 characters"),
+});

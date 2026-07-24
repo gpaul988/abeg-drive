@@ -2,28 +2,60 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AppShell, Button, Card, Field, SuccessBanner, TextArea, TextInput } from "@/components/ui";
-import { getSession } from "@/lib/apiClient";
+import { AppShell, Button, Card, ErrorBanner, Field, SuccessBanner, TextArea, TextInput } from "@/components/ui";
+import { apiGet, apiPost, getSession } from "@/lib/apiClient";
 import { customerNavLinks } from "@/lib/navLinks";
+
+interface Me {
+  email: string;
+  phone: string;
+}
 
 export default function SupportPage() {
   const router = useRouter();
-  const [subject, setSubject] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (!getSession()) router.replace("/login");
+    const session = getSession();
+    if (!session) {
+      router.replace("/login");
+      return;
+    }
+    apiGet<Me>("/customers/me", session.accessToken).then(({ status, data }) => {
+      if (status === 200) {
+        setEmail(data.email);
+        setPhone(data.phone);
+      }
+    });
   }, [router]);
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // MVP: in-app chat is deferred per spec section 9 ("phone-based support
-    // acceptable initially"). This form is a lightweight ticket intake;
-    // production would route it to a helpdesk (Zendesk/Freshdesk) via
-    // webhook rather than storing tickets in this dev data store.
+    setError(null);
+    setLoading(true);
+    const { status, data } = await apiPost<{ error?: string }>("/contact", {
+      name: name || email.split("@")[0],
+      email,
+      phone,
+      category: "support",
+      message,
+    });
+    setLoading(false);
+    if (status !== 201) {
+      setError(
+        data.error === "validation_error"
+          ? "Please check your details — your message needs at least 10 characters."
+          : "Something went wrong sending your message. Please try again."
+      );
+      return;
+    }
     setSubmitted(true);
-    setSubject("");
     setMessage("");
   }
 
@@ -42,18 +74,21 @@ export default function SupportPage() {
         </a>
       </Card>
 
-      <SuccessBanner message={submitted ? "Your message was sent. Our team will respond by phone or email shortly." : null} />
+      <ErrorBanner message={error} />
+      <SuccessBanner
+        message={submitted ? "Your message was sent. Our team will respond by phone or email shortly." : null}
+      />
 
       <Card>
         <h2 className="font-medium text-paper mb-4">Send us a message</h2>
         <form onSubmit={onSubmit}>
-          <Field label="Subject">
-            <TextInput value={subject} onChange={(e) => setSubject(e.target.value)} required />
+          <Field label="Your name">
+            <TextInput value={name} onChange={(e) => setName(e.target.value)} placeholder={email.split("@")[0]} />
           </Field>
           <Field label="Message">
-            <TextArea rows={5} value={message} onChange={(e) => setMessage(e.target.value)} required />
+            <TextArea rows={5} value={message} onChange={(e) => setMessage(e.target.value)} required minLength={10} />
           </Field>
-          <Button type="submit" className="w-full">
+          <Button type="submit" loading={loading} className="w-full">
             Send message
           </Button>
         </form>

@@ -182,6 +182,9 @@ export function AppShell({
           </div>
           <div className="flex items-center gap-3">
             <Badge tone="neutral">{roleLabel}</Badge>
+            <a href="/account/security" className="text-sm text-paper-faint hover:text-paper transition-colors">
+              Account
+            </a>
             <button
               onClick={() => {
                 clearSession();

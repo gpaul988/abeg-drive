@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { href: "/pricing", label: "Pricing" },
   { href: "/corporate", label: "For business" },
   { href: "/partners", label: "Venue partners" },
+  { href: "/contact-us", label: "Contact" },
 ];
 
 export function MarketingShell({ children }: { children: ReactNode }) {
@@ -45,6 +46,9 @@ export function MarketingShell({ children }: { children: ReactNode }) {
         <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-paper-faint">
           <span>© {new Date().getFullYear()} AbegDrive. Port Harcourt, Rivers State.</span>
           <div className="flex items-center gap-6">
+            <Link href="/contact-us" className="hover:text-paper-dim">
+              Contact
+            </Link>
             <Link href="/terms" className="hover:text-paper-dim">
               Terms
             </Link>

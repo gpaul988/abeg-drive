@@ -22,6 +22,7 @@ export const adminNavLinks = [
   { href: "/admin/customers", label: "Customers" },
   { href: "/admin/trips", label: "Trips" },
   { href: "/admin/incidents", label: "Incidents" },
+  { href: "/admin/contact-messages", label: "Inbox" },
   { href: "/admin/bond-fund", label: "Bond fund" },
   { href: "/admin/pricing", label: "Pricing" },
   { href: "/admin/venues", label: "Venues" },

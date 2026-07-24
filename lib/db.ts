@@ -23,6 +23,7 @@ import {
   BondFundLedgerEntry,
   CorporateAccount,
   VenuePartner,
+  ContactMessage,
 } from "./types";
 
 interface DbSchema {
@@ -38,6 +39,7 @@ interface DbSchema {
   venuePartners: VenuePartner[];
   auditLog: AuditLogEntry[];
   pricingConfig: PricingConfig;
+  contactMessages: ContactMessage[];
 }
 
 export interface PricingConfig {
@@ -73,6 +75,7 @@ const defaultData: DbSchema = {
   corporateAccounts: [],
   venuePartners: [],
   auditLog: [],
+  contactMessages: [],
   pricingConfig: {
     baseFare: 1500,
     perKmRate: 250,
@@ -94,6 +97,7 @@ async function ensureInit() {
   await db.read();
   db.data ||= defaultData;
   db.data.pricingConfig ||= defaultData.pricingConfig;
+  db.data.contactMessages ||= [];
   initialized = true;
 }
 

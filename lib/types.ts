@@ -267,3 +267,21 @@ export interface VenuePartner {
   whitelisted: boolean;
   createdAt: string;
 }
+
+// --- Contact messages ---
+
+export type ContactCategory = "general" | "support" | "press" | "partnership" | "safety_concern";
+export type ContactMessageStatus = "new" | "in_progress" | "resolved";
+
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  category: ContactCategory;
+  message: string;
+  status: ContactMessageStatus;
+  adminNotes?: string;
+  createdAt: string;
+  resolvedAt?: string;
+}
