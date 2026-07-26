@@ -2,6 +2,7 @@ export const customerNavLinks = [
   { href: "/dashboard", label: "Home" },
   { href: "/book", label: "Book a driver" },
   { href: "/trip-history", label: "Trip history" },
+  { href: "/refer", label: "Refer a friend" },
   { href: "/profile", label: "Profile" },
   { href: "/payment-methods", label: "Payment" },
   { href: "/support", label: "Support" },
@@ -26,6 +27,7 @@ export const adminNavLinks = [
   { href: "/admin/bond-fund", label: "Bond fund" },
   { href: "/admin/pricing", label: "Pricing" },
   { href: "/admin/venues", label: "Venues" },
+  { href: "/admin/corporate-accounts", label: "Corporate" },
   { href: "/admin/reports", label: "Reports" },
   { href: "/admin/audit-log", label: "Audit log" },
 ];
@@ -48,4 +50,7 @@ export const corporateNavLinks = [
   { href: "/corporate/reports", label: "Reports" },
 ];
 
-export const partnerNavLinks = [{ href: "/partner/dashboard", label: "Requests" }];
+export const partnerNavLinks = [
+  { href: "/partner/dashboard", label: "Requests" },
+  { href: "/partner/co-branding", label: "Co-branding" },
+];

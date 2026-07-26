@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { consumeOtp, findUserByPhone, updateUser } from "@/lib/repositories/userRepository";
+import { strongPasswordSchema } from "@/lib/validation";
 import { hashPassword } from "@/lib/auth";
 
 const schema = z.object({
   phone: z.string().min(10),
   code: z.string().length(6),
-  newPassword: z.string().min(8),
+  newPassword: strongPasswordSchema,
 });
 
 export async function POST(req: Request) {

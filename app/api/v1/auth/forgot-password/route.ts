@@ -3,10 +3,15 @@ import { z } from "zod";
 import { findUserByPhone, createOtp } from "@/lib/repositories/userRepository";
 import { generateOtpCode } from "@/lib/auth";
 import { sendOtpSms } from "@/lib/providers/sms";
+import { enforceRateLimit } from "@/lib/rateLimit";
 
 const schema = z.object({ phone: z.string().min(10) });
 
 export async function POST(req: Request) {
+  // Prevents SMS-bombing a phone number with repeated reset codes.
+  const rateLimitResponse = enforceRateLimit(req, "forgot-password", 5, 15 * 60 * 1000);
+  if (rateLimitResponse) return rateLimitResponse;
+
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {

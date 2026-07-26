@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { strongPasswordSchema } from "@/lib/validation";
 import { requireUser } from "@/lib/requireAuth";
 import { loadCorporateAccountForUser } from "@/lib/corporateAccess";
 import {
@@ -30,7 +31,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 const addEmployeeSchema = z.object({
   email: z.string().email(),
   phone: z.string().regex(/^(\+234|0)[789][01]\d{8}$/, "Enter a valid Nigerian phone number"),
-  password: z.string().min(8),
+  password: strongPasswordSchema,
 });
 
 // Adds a new employee: creates a customer-role user tied to the corporate

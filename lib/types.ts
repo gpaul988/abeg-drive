@@ -38,6 +38,11 @@ export interface BaseUser {
   // roles per spec section 3.7 and 5. Not applicable to customer/driver.
   totpSecret?: string;
   totpEnabledAt?: string;
+
+  // Account lockout — closes a real gap where login had no brute-force
+  // protection at all. Reset on successful login.
+  failedLoginAttempts: number;
+  lockedUntil?: string;
 }
 
 export interface CustomerProfile {
@@ -46,6 +51,9 @@ export interface CustomerProfile {
   savedVehicles: Vehicle[];
   paymentMethodToken?: string;
   trustScore: number;
+  referralCode: string;
+  referredByCode?: string;
+  referralCount: number;
 }
 
 export interface EmergencyContact {
@@ -69,9 +77,12 @@ export interface OtpRecord {
 }
 
 export interface RefreshTokenRecord {
+  id: string;
   token: string;
   userId: string;
+  createdAt: string;
   expiresAt: string;
+  userAgent?: string;
   revokedAt?: string;
 }
 

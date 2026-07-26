@@ -1,5 +1,6 @@
 import { getDb } from "../db";
 import { DriverProfile, GeoPoint } from "../types";
+import { encryptPII, decryptPII } from "../encryption";
 
 const DEFAULT_PROBATION_TRIPS_REQUIRED = 10;
 
@@ -25,9 +26,24 @@ export async function createDriverProfile(userId: string): Promise<DriverProfile
   return profile;
 }
 
+/** Returns a copy with licenseNumber decrypted — never mutates the stored
+ * (encrypted) record, since decrypting in place would corrupt it for the
+ * next read. */
+function withDecryptedLicense(profile: DriverProfile): DriverProfile {
+  if (!profile.licenseNumber) return profile;
+  try {
+    return { ...profile, licenseNumber: decryptPII(profile.licenseNumber) };
+  } catch {
+    // Already-plaintext data from before encryption was introduced, or a
+    // malformed payload — fail safe by returning as-is rather than crashing.
+    return profile;
+  }
+}
+
 export async function getDriverProfile(userId: string): Promise<DriverProfile | undefined> {
   const db = await getDb();
-  return db.data.driverProfiles.find((d) => d.userId === userId);
+  const profile = db.data.driverProfiles.find((d) => d.userId === userId);
+  return profile ? withDecryptedLicense(profile) : undefined;
 }
 
 export async function updateDriverProfile(
@@ -37,14 +53,18 @@ export async function updateDriverProfile(
   const db = await getDb();
   const profile = db.data.driverProfiles.find((d) => d.userId === userId);
   if (!profile) return undefined;
-  Object.assign(profile, patch);
+
+  const encryptedPatch = { ...patch };
+  if (encryptedPatch.licenseNumber) encryptedPatch.licenseNumber = encryptPII(encryptedPatch.licenseNumber);
+
+  Object.assign(profile, encryptedPatch);
   await db.write();
-  return profile;
+  return withDecryptedLicense(profile);
 }
 
 export async function listDriverProfiles(): Promise<DriverProfile[]> {
   const db = await getDb();
-  return db.data.driverProfiles;
+  return db.data.driverProfiles.map(withDecryptedLicense);
 }
 
 export async function findAvailableDrivers(

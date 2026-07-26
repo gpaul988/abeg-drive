@@ -60,6 +60,7 @@ async function main() {
       verificationStatus: "verified",
       totpSecret,
       totpEnabledAt: new Date().toISOString(),
+      failedLoginAttempts: 0,
     });
 
     console.log(`\n=== ${account.role} ===`);

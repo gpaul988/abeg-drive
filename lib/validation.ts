@@ -3,11 +3,32 @@ import { z } from "zod";
 // Nigerian phone numbers: +234XXXXXXXXXX or 0XXXXXXXXXX
 const phoneRegex = /^(\+234|0)[789][01]\d{8}$/;
 
+// A short blocklist of the most common weak passwords — not a full
+// breached-password check (that requires an external service like
+// HaveIBeenPwned's k-anonymity API, which this sandbox has no network
+// access to call), but catches the most obvious "password123"-style
+// choices that a length+complexity check alone wouldn't.
+const COMMON_PASSWORDS = new Set([
+  "password", "password1", "password123", "12345678", "123456789",
+  "qwertyui", "letmein1", "welcome1", "iloveyou", "admin1234",
+  "abc12345", "passw0rd",
+]);
+
+export const strongPasswordSchema = z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .max(128)
+  .refine((val) => /[a-z]/.test(val), "Password must include a lowercase letter")
+  .refine((val) => /[A-Z]/.test(val), "Password must include an uppercase letter")
+  .refine((val) => /[0-9]/.test(val), "Password must include a number")
+  .refine((val) => !COMMON_PASSWORDS.has(val.toLowerCase()), "This password is too common — please choose another");
+
 export const signupSchema = z.object({
   phone: z.string().regex(phoneRegex, "Enter a valid Nigerian phone number"),
   email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: strongPasswordSchema,
   role: z.enum(["customer", "driver"]).default("customer"),
+  referredByCode: z.string().trim().max(20).optional(),
 });
 
 export const verifyOtpSchema = z.object({
@@ -146,5 +167,5 @@ export const contactMessageUpdateSchema = z.object({
 
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(1),
-  newPassword: z.string().min(8, "New password must be at least 8 characters"),
+  newPassword: strongPasswordSchema,
 });

@@ -27,6 +27,7 @@ export default function BondFundPage() {
   const [data, setData] = useState<BondFundData | null>(null);
   const [payoutIncidentId, setPayoutIncidentId] = useState("");
   const [payoutAmount, setPayoutAmount] = useState("");
+  const [payoutTotp, setPayoutTotp] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -51,16 +52,22 @@ export default function BondFundPage() {
       setError("Please provide an incident ID and payout amount.");
       return;
     }
+    if (!payoutTotp) {
+      setError("Enter your current authenticator code to authorize this payout.");
+      return;
+    }
     const session = getSession()!;
     const { status, data: res } = await apiPost<{ error?: string; currentBalance?: number }>(
       `/admin/bond-fund/claims/${payoutIncidentId}/payout`,
-      { amount: Number(payoutAmount) },
+      { amount: Number(payoutAmount), totpCode: payoutTotp },
       session.accessToken
     );
     if (status !== 200) {
       setError(
         res.error === "insufficient_bond_fund_balance"
           ? `Insufficient balance — current balance is ₦${res.currentBalance?.toLocaleString()}.`
+          : res.error === "invalid_totp_code"
+          ? "That authenticator code is incorrect or expired."
           : "Couldn't process this payout."
       );
       return;
@@ -68,6 +75,7 @@ export default function BondFundPage() {
     setSuccess("Claim paid out and incident marked resolved.");
     setPayoutIncidentId("");
     setPayoutAmount("");
+    setPayoutTotp("");
     load();
   }
 
@@ -95,19 +103,31 @@ export default function BondFundPage() {
 
       <Card className="mb-6">
         <h2 className="font-medium text-paper mb-3">Process a claim payout</h2>
+        <p className="text-xs text-paper-faint mb-3">
+          Moving money out of the bond fund requires your current authenticator code, even within an active
+          session — this action is too consequential to rely on the session token alone.
+        </p>
         <form onSubmit={onPayout} className="flex flex-col sm:flex-row gap-2">
           <input
-            className="flex-1 border border-ink-border-strong rounded-lg px-3 py-2 text-sm"
+            className="flex-1 bg-ink-850 border border-ink-border rounded-lg px-3 py-2 text-sm text-paper placeholder:text-paper-faint focus:outline-none focus:ring-2 focus:ring-amber/50"
             placeholder="Incident ID"
             value={payoutIncidentId}
             onChange={(e) => setPayoutIncidentId(e.target.value)}
           />
           <input
             type="number"
-            className="w-full sm:w-40 border border-ink-border-strong rounded-lg px-3 py-2 text-sm"
+            className="w-full sm:w-32 bg-ink-850 border border-ink-border rounded-lg px-3 py-2 text-sm text-paper placeholder:text-paper-faint focus:outline-none focus:ring-2 focus:ring-amber/50"
             placeholder="Amount (₦)"
             value={payoutAmount}
             onChange={(e) => setPayoutAmount(e.target.value)}
+          />
+          <input
+            className="w-full sm:w-28 bg-ink-850 border border-ink-border rounded-lg px-3 py-2 text-sm text-paper placeholder:text-paper-faint focus:outline-none focus:ring-2 focus:ring-amber/50 font-mono"
+            placeholder="2FA code"
+            inputMode="numeric"
+            maxLength={6}
+            value={payoutTotp}
+            onChange={(e) => setPayoutTotp(e.target.value.replace(/\D/g, ""))}
           />
           <Button type="submit">Pay out</Button>
         </form>

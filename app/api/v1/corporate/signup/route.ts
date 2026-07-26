@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { strongPasswordSchema } from "@/lib/validation";
 import { createUser, findUserByEmail, findUserByPhone, storeRefreshToken } from "@/lib/repositories/userRepository";
 import { createCorporateAccount } from "@/lib/repositories/corporateRepository";
 import { hashPassword, signAccessToken, generateRefreshToken, REFRESH_TOKEN_TTL } from "@/lib/auth";
@@ -15,7 +16,7 @@ const schema = z.object({
   billingContact: z.string().email(),
   adminEmail: z.string().email(),
   adminPhone: z.string().regex(/^(\+234|0)[789][01]\d{8}$/, "Enter a valid Nigerian phone number"),
-  adminPassword: z.string().min(8),
+  adminPassword: strongPasswordSchema,
 });
 
 export async function POST(req: Request) {

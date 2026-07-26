@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireRole } from "@/lib/requireRole";
+import { requireStepUpTotp } from "@/lib/stepUpAuth";
 import { getIncident, updateIncident } from "@/lib/repositories/incidentRepository";
 import { recordClaimPayout, getBondFundBalance } from "@/lib/repositories/bondFundRepository";
 import { recordAuditLog } from "@/lib/repositories/auditLogRepository";
 
-const schema = z.object({ amount: z.number().positive() });
+const schema = z.object({
+  amount: z.number().positive(),
+  // Step-up re-authentication: a fresh 2FA code is required for this
+  // specific action, independent of the access token's normal lifetime.
+  // See lib/stepUpAuth.ts for why.
+  totpCode: z.string().length(6).optional(),
+});
 
 export async function POST(req: Request, { params }: { params: Promise<{ incidentId: string }> }) {
   const auth = await requireRole(req, ["platform_admin", "super_admin"]);
@@ -22,6 +29,9 @@ export async function POST(req: Request, { params }: { params: Promise<{ inciden
   if (!parsed.success) {
     return NextResponse.json({ error: "validation_error", details: parsed.error.flatten() }, { status: 400 });
   }
+
+  const stepUp = await requireStepUpTotp(auth.user, parsed.data.totpCode);
+  if ("error" in stepUp) return stepUp.error;
 
   const currentBalance = await getBondFundBalance();
   if (parsed.data.amount > currentBalance) {

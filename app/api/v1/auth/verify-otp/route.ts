@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 import { verifyOtpSchema } from "@/lib/validation";
 import { consumeOtp, findUserByPhone, updateUser } from "@/lib/repositories/userRepository";
+import { enforceRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
+  // A 6-digit OTP has only 1,000,000 possibilities — without a rate limit,
+  // it's brute-forceable in seconds. This is arguably more important than
+  // the login rate limit.
+  const rateLimitResponse = enforceRateLimit(req, "verify-otp", 10, 5 * 60 * 1000);
+  if (rateLimitResponse) return rateLimitResponse;
+
   const body = await req.json().catch(() => null);
   const parsed = verifyOtpSchema.safeParse(body);
   if (!parsed.success) {
