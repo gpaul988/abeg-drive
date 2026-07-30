@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     email: user.email,
     role: user.role,
     verificationStatus: user.verificationStatus,
-    onboardingComplete: Boolean(user.otpVerifiedAt && user.identityVerifiedAt && user.paymentMethodAddedAt),
+    onboardingComplete: Boolean(user.otpVerifiedAt && user.emailVerifiedAt && user.identityVerifiedAt && user.paymentMethodAddedAt),
     profile,
   });
 }

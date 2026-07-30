@@ -86,7 +86,7 @@ export async function POST(req: Request) {
       id: user.id,
       role: user.role,
       verificationStatus: user.verificationStatus,
-      onboardingComplete: Boolean(user.otpVerifiedAt && user.identityVerifiedAt && user.paymentMethodAddedAt),
+      onboardingComplete: Boolean(user.otpVerifiedAt && user.emailVerifiedAt && user.identityVerifiedAt && user.paymentMethodAddedAt),
     },
   });
 }

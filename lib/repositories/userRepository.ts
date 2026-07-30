@@ -152,14 +152,14 @@ export async function addEmergencyContactToProfile(
 
 // --- OTP ---
 
-export async function createOtp(phone: string, code: string, ttlMs: number): Promise<OtpRecord> {
+export async function createOtp(identifier: string, code: string, ttlMs: number): Promise<OtpRecord> {
   const db = await getDb();
-  // invalidate any prior unconsumed OTPs for this phone
+  // invalidate any prior unconsumed OTPs for this identifier
   db.data.otps.forEach((o) => {
-    if (o.phone === phone && !o.consumedAt) o.consumedAt = new Date().toISOString();
+    if (o.identifier === identifier && !o.consumedAt) o.consumedAt = new Date().toISOString();
   });
   const record: OtpRecord = {
-    phone,
+    identifier,
     code,
     expiresAt: new Date(Date.now() + ttlMs).toISOString(),
   };
@@ -168,10 +168,10 @@ export async function createOtp(phone: string, code: string, ttlMs: number): Pro
   return record;
 }
 
-export async function consumeOtp(phone: string, code: string): Promise<boolean> {
+export async function consumeOtp(identifier: string, code: string): Promise<boolean> {
   const db = await getDb();
   const record = db.data.otps
-    .filter((o) => o.phone === phone && o.code === code && !o.consumedAt)
+    .filter((o) => o.identifier === identifier && o.code === code && !o.consumedAt)
     .sort((a, b) => (a.expiresAt < b.expiresAt ? 1 : -1))[0];
 
   if (!record) return false;

@@ -31,6 +31,7 @@ export interface BaseUser {
 
   // Signup funnel progress — used to gate booking until all steps complete
   otpVerifiedAt?: string;
+  emailVerifiedAt?: string;
   identityVerifiedAt?: string;
   paymentMethodAddedAt?: string;
 
@@ -70,7 +71,7 @@ export interface Vehicle {
 }
 
 export interface OtpRecord {
-  phone: string;
+  identifier: string; // phone number or email address
   code: string;
   expiresAt: string;
   consumedAt?: string;

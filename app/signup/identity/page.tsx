@@ -60,8 +60,8 @@ export default function IdentityPage() {
 
   return (
     <AuthShell
-      step={3}
-      totalSteps={4}
+      step={4}
+      totalSteps={5}
       title={stage === "nin" ? "Verify your identity" : "Take a quick selfie"}
       subtitle={
         stage === "nin"

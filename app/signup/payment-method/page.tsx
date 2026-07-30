@@ -60,8 +60,8 @@ export default function PaymentMethodPage() {
 
   return (
     <AuthShell
-      step={4}
-      totalSteps={4}
+      step={5}
+      totalSteps={5}
       title="Add a payment method"
       subtitle="Required before your first booking — no cash-only anonymous bookings, for everyone's safety"
     >

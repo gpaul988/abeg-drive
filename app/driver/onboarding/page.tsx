@@ -7,18 +7,19 @@ import { Field, Select } from "@/components/ui";
 import { SelfieCapture } from "@/components/SelfieCapture";
 import { apiPost, getSession, getSignupState, saveSession } from "@/lib/apiClient";
 
-type Stage = "nin" | "selfie" | "competency" | "documents" | "done";
+type Stage = "email" | "nin" | "selfie" | "competency" | "documents" | "done";
 
-const STAGE_ORDER: Stage[] = ["nin", "selfie", "competency", "documents", "done"];
+const STAGE_ORDER: Stage[] = ["email", "nin", "selfie", "competency", "documents", "done"];
 
 export default function DriverOnboardingPage() {
   const router = useRouter();
   const [userId, setUserId] = useState("");
-  const [stage, setStage] = useState<Stage>("nin");
+  const [stage, setStage] = useState<Stage>("email");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [nin, setNin] = useState("");
+  const [emailCode, setEmailCode] = useState("");
   const [competencies, setCompetencies] = useState<string[]>([]);
   const [bvn, setBvn] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
@@ -35,7 +36,24 @@ export default function DriverOnboardingPage() {
       return;
     }
     setUserId(state.userId);
+    apiPost("/auth/send-email-otp", { userId: state.userId });
   }, [router]);
+
+  async function onSubmitEmail(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    const { status, data } = await apiPost<{ verified: boolean }>("/auth/verify-email-otp", {
+      userId,
+      code: emailCode,
+    });
+    setLoading(false);
+    if (status !== 200 || !data.verified) {
+      setError("That code is incorrect or expired.");
+      return;
+    }
+    setStage("nin");
+  }
 
   async function onSubmitNin(e: React.FormEvent) {
     e.preventDefault();
@@ -141,10 +159,31 @@ export default function DriverOnboardingPage() {
   return (
     <AuthShell
       step={stepIndex}
-      totalSteps={5}
+      totalSteps={6}
       title={stageTitle(stage)}
       subtitle={stageSubtitle(stage)}
     >
+      {stage === "email" && (
+        <form onSubmit={onSubmitEmail}>
+          <ErrorBanner message={error} />
+          <TextField
+            label="Verification code"
+            inputMode="numeric"
+            maxLength={6}
+            placeholder="123456"
+            required
+            value={emailCode}
+            onChange={(e) => setEmailCode(e.target.value.replace(/\D/g, ""))}
+          />
+          <PrimaryButton type="submit" loading={loading} disabled={emailCode.length !== 6}>
+            Verify
+          </PrimaryButton>
+          <p className="text-xs text-paper-faint text-center mt-4">
+            Dev mode: check the server console log for your email verification code.
+          </p>
+        </form>
+      )}
+
       {stage === "nin" && (
         <form onSubmit={onSubmitNin}>
           <ErrorBanner message={error} />
@@ -269,6 +308,8 @@ export default function DriverOnboardingPage() {
 
 function stageTitle(stage: Stage): string {
   switch (stage) {
+    case "email":
+      return "Verify your email";
     case "nin":
       return "Verify your identity";
     case "selfie":
@@ -284,6 +325,8 @@ function stageTitle(stage: Stage): string {
 
 function stageSubtitle(stage: Stage): string {
   switch (stage) {
+    case "email":
+      return "Enter the 6-digit code we just emailed you";
     case "nin":
       return "Required before we can review your application";
     case "selfie":

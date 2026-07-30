@@ -4,10 +4,10 @@ import { findUserById, storeRefreshToken } from "@/lib/repositories/userReposito
 import { signAccessToken, generateRefreshToken, REFRESH_TOKEN_TTL } from "@/lib/auth";
 
 // Not part of the public spec's endpoint list, but required to bridge the
-// signup funnel (signup -> otp -> identity -> payment-method) into an
-// authenticated session without re-asking for the password mid-flow. Only
-// issues a token once both phone verification and identity verification are
-// already complete for this user.
+// signup funnel (signup -> otp -> verify-email -> identity -> payment-method)
+// into an authenticated session without re-asking for the password
+// mid-flow. Only issues a token once phone, email, and identity
+// verification are all already complete for this user.
 const schema = z.object({ userId: z.string().uuid() });
 
 export async function POST(req: Request) {
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   if (!user) {
     return NextResponse.json({ error: "user_not_found" }, { status: 404 });
   }
-  if (!user.otpVerifiedAt || !user.identityVerifiedAt) {
+  if (!user.otpVerifiedAt || !user.emailVerifiedAt || !user.identityVerifiedAt) {
     return NextResponse.json({ error: "onboarding_incomplete" }, { status: 409 });
   }
 
